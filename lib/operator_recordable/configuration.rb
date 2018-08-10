@@ -3,7 +3,7 @@
 module OperatorRecordable
   class Configuration
     VALID_ACTIONS = %i[create update destroy].freeze
-  
+
     def initialize(config)
       @config = initialize_config(config)
 
