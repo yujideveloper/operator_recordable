@@ -1,5 +1,7 @@
-require "operator_recordable/version"
+# frozen_string_literal: true
 
 module OperatorRecordable
-  # Your code goes here...
 end
+
+require "operator_recordable/version"
+require "operator_recordable/recorder"

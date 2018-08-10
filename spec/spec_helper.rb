@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "active_record"
 require "operator_recordable"
 
 RSpec.configure do |config|
