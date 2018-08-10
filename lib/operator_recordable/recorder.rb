@@ -57,18 +57,22 @@ module OperatorRecordable
           store[config.operator_class_name]
         end
 
+        define_method :record_operator_on do |*actions|
+          @_record_operator_on = Configuration::PerModel.new(actions)
+        end
+
         define_method :record_creator? do
-          config.record_creator?
+          config.record_creator? && (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_creator?)
         end
         private :record_creator?
 
         define_method :record_updater? do
-          config.record_updater?
+          config.record_updater? && (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_updater?)
         end
         private :record_updater?
 
         define_method :record_deleter? do
-          config.record_deleter?
+          config.record_deleter? && (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_deleter?)
         end
         private :record_deleter?
       end

@@ -62,5 +62,29 @@ module OperatorRecordable
     private
 
     attr_reader :config
+
+    class PerModel
+      def initialize(actions)
+        @actions = actions
+        return if actions.all?{ |a| VALID_ACTIONS.include?(a) }
+        raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
+      end
+
+      def record_creator?
+        actions.include? :create
+      end
+
+      def record_updater?
+        actions.include? :update
+      end
+
+      def record_deleter?
+        actions.include? :destroy
+      end
+
+      private
+
+      attr_reader :actions
+    end
   end
 end
