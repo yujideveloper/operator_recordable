@@ -8,13 +8,7 @@ ActiveRecord::Base.configurations = {
 puts ActiveRecord::Base.configurations
 ActiveRecord::Base.establish_connection :test
 
-migration_class = if ActiveRecord::VERSION::MAJOR >= 5
-                    ActiveRecord::Migration::Current
-                  else
-                    ActiveRecord::Migration
-                  end
-
-class CreateAllTables < migration_class
+class CreateAllTables < ActiveRecord::Migration::Current
   def self.up
     create_table(:operators) do |t|
       t.string :name
