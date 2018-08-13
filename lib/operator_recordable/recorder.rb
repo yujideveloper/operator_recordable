@@ -27,21 +27,21 @@ module OperatorRecordable
         end
 
         define_method :assign_creator do
-          return unless (op = operator)
+          return unless (op = self.operator)
           self.__send__(:"#{config.creator_column_name}=", op.id)
         end
         private :assign_creator
 
         define_method :assign_updater do
           return if !self.new_record? && !self.changed?
-          return unless (op = operator)
+          return unless (op = self.operator)
           self.__send__(:"#{config.updater_column_name}=", op.id)
         end
         private :assign_updater
 
         define_method :assign_deleter do
           return if self.frozen?
-          return unless (op = operator)
+          return unless (op = self.operator)
           self.class
             .where(self.class.primary_key => id)
             .update_all(config.deleter_column_name => op.id)
@@ -62,17 +62,20 @@ module OperatorRecordable
         end
 
         define_method :record_creator? do
-          config.record_creator? && (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_creator?)
+          config.record_creator? &&
+            (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_creator?)
         end
         private :record_creator?
 
         define_method :record_updater? do
-          config.record_updater? && (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_updater?)
+          config.record_updater? &&
+            (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_updater?)
         end
         private :record_updater?
 
         define_method :record_deleter? do
-          config.record_deleter? && (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_deleter?)
+          config.record_deleter? &&
+            (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_deleter?)
         end
         private :record_deleter?
       end
