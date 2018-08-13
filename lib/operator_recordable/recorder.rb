@@ -42,7 +42,8 @@ module OperatorRecordable
         define_method :assign_deleter do
           return if self.frozen?
           return unless (op = self.operator)
-          self.class
+          self
+            .class
             .where(self.class.primary_key => id)
             .update_all(config.deleter_column_name => op.id)
           self.__send__(:"#{config.deleter_column_name}=", op.id)
