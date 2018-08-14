@@ -11,20 +11,11 @@ module OperatorRecordable
       raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
     end
 
-    def operator_class_name
-      config[:operator_class_name]
-    end
-
-    def creator_column_name
-      config[:creator_column_name]
-    end
-
-    def updater_column_name
-      config[:updater_column_name]
-    end
-
-    def deleter_column_name
-      config[:deleter_column_name]
+    %i[operator_class_name creator_column_name updater_column_name deleter_column_name
+       operator_association_options operator_association_scope].each do |name|
+      define_method name do
+        config[name]
+      end
     end
 
     def record_creator?
@@ -37,14 +28,6 @@ module OperatorRecordable
 
     def record_deleter?
       config[:actions].include? :destroy
-    end
-
-    def operator_association_options
-      config[:operator_association_options]
-    end
-
-    def operator_association_scope
-      config[:operator_association_scope]
     end
 
     private
