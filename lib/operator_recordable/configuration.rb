@@ -11,18 +11,6 @@ module OperatorRecordable
       raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
     end
 
-    def initialize_config(config)
-      {
-        operator_class_name: "Operator",
-        creator_column_name: "created_by",
-        updater_column_name: "updated_by",
-        deleter_column_name: "deleted_by",
-        actions: VALID_ACTIONS,
-        operator_association_options: {},
-        operator_association_scope: nil
-      }.merge!(config || {})
-    end
-
     def operator_class_name
       config[:operator_class_name]
     end
@@ -62,6 +50,18 @@ module OperatorRecordable
     private
 
     attr_reader :config
+
+    def initialize_config(config)
+      {
+        operator_class_name: "Operator",
+        creator_column_name: "created_by",
+        updater_column_name: "updated_by",
+        deleter_column_name: "deleted_by",
+        actions: VALID_ACTIONS,
+        operator_association_options: {},
+        operator_association_scope: nil
+      }.merge!(config || {})
+    end
 
     class PerModel
       def initialize(actions)
