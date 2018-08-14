@@ -7,7 +7,7 @@ module OperatorRecordable
     def initialize(config)
       @config = initialize_config(config)
 
-      return if Array(config[:actions]).all? { |a| VALID_ACTIONS.include?(a) }
+      return if Array(config[:actions]).all? &VALID_ACTIONS.method(:include?)
       raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
     end
 
@@ -49,7 +49,7 @@ module OperatorRecordable
     class PerModel
       def initialize(actions)
         @actions = actions
-        return if actions.all? { |a| VALID_ACTIONS.include?(a) }
+        return if actions.all? &VALID_ACTIONS.method(:include?)
         raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
       end
 
