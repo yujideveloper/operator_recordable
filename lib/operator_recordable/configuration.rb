@@ -60,7 +60,7 @@ module OperatorRecordable
         actions: VALID_ACTIONS,
         operator_association_options: {},
         operator_association_scope: nil
-      }.merge!(config || {})
+      }.merge!(config || {}).freeze
     end
 
     class PerModel
