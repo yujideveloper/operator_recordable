@@ -86,8 +86,7 @@ module OperatorRecordable
       class_or_module.include InstanceMethodsBuilder.new(@store, configuration)
       class_or_module.extend  ClassMethodsBuilder.new(@store, configuration)
 
-      c = configuration
-      class_or_module.class_eval do
+      class_or_module.class_exec(configuration) do |c|
         before_create  :assign_creator if record_creator?
         before_save    :assign_updater if record_updater?
         before_destroy :assign_deleter if record_deleter?
