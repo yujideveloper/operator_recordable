@@ -2,10 +2,17 @@
 
 module OperatorRecordable
   class Store
-    private
+    def self.operator_store_key
+      :operator_recordable_operator
+    end
 
-    def store_key_for(key)
-      :"operator_recordable_operator_#{key}"
+    def self.register(name, klass)
+      @stores ||= {}
+      @stores[name] = klass
+    end
+
+    def self.fetch_class(name)
+      @stores.fetch(name)
     end
   end
 end

@@ -1,7 +1,37 @@
 # frozen_string_literal: true
 
-module OperatorRecordable
-end
-
 require "operator_recordable/version"
+require "operator_recordable/configuration"
+require "operator_recordable/store"
 require "operator_recordable/recorder"
+
+module OperatorRecordable
+  def self.config
+    self.config = {} unless instance_variable_defined? :@config
+    @config
+  end
+
+  def self.config=(config)
+    @config = Configuration.new(config)
+  end
+
+  def self.store
+    self.config.store
+  end
+
+  def self.operator
+    config.store[Store.operator_store_key]
+  end
+
+  def self.operator=(operator)
+    config.store[Store.operator_store_key] = operator
+  end
+
+  def self.included(class_or_module)
+    config = OperatorRecordable.config
+    store = OperatorRecordable.store
+
+    class_or_module.include Recorder::InstanceMethodsBuilder.new(store, config)
+    class_or_module.extend Recorder::ClassMethodsBuilder.new(store, config)
+  end
+end

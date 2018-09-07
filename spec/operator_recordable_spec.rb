@@ -31,12 +31,12 @@ CreateAllTables.up
 
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
+
+  include OperatorRecordable
 end
 
 class Operator < ApplicationRecord
 end
-
-OperatorRecorder = OperatorRecordable::Recorder.new
 
 module SoftDeletable
   def destroy
@@ -55,7 +55,8 @@ end
 
 class Account < ApplicationRecord
   include SoftDeletable
-  include OperatorRecorder
+
+  record_operator_on :create, :update, :destroy
 end
 
 RSpec.describe OperatorRecordable do
@@ -71,7 +72,7 @@ RSpec.describe OperatorRecordable do
 
     it "should be assigned creator" do
       operator = Operator.create!(name: "op1")
-      OperatorRecorder.operator = operator
+      OperatorRecordable.operator = operator
       account = Account.create!
       expect(account.created_by).to eq operator.id
       expect(account.creator).to eq operator
@@ -86,12 +87,12 @@ RSpec.describe OperatorRecordable do
 
     it "should be assigned updater" do
       operator1 = Operator.create!(name: "op1")
-      OperatorRecorder.operator = operator1
+      OperatorRecordable.operator = operator1
       account = Account.create!
       expect(account.updated_by).to eq operator1.id
       expect(account.updater).to eq operator1
       operator2 = Operator.create!(name: "op2")
-      OperatorRecorder.operator = operator2
+      OperatorRecordable.operator = operator2
       account.update!(name: "test")
       expect(account.updated_by).to eq operator2.id
       expect(account.updater).to eq operator2
@@ -106,12 +107,12 @@ RSpec.describe OperatorRecordable do
 
     it "should be assigned deleter" do
       operator1 = Operator.create!(name: "op1")
-      OperatorRecorder.operator = operator1
+      OperatorRecordable.operator = operator1
       account = Account.create!
       expect(account.updated_by).to eq operator1.id
       expect(account.updater).to eq operator1
       operator2 = Operator.create!(name: "op2")
-      OperatorRecorder.operator = operator2
+      OperatorRecordable.operator = operator2
       account.destroy!
       expect(account.deleted_by).to eq operator2.id
       expect(account.deleter).to eq operator2

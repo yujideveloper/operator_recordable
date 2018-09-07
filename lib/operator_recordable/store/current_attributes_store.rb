@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OperatorRecordable
-  class CurrentAttributesStore < Store
+  class CurrentAttributesStore
     class Current < ::ActiveSupport::CurrentAttributes
       attribute :store
 
@@ -17,11 +17,13 @@ module OperatorRecordable
     end
 
     def [](key)
-      Current[store_key_for(key)]
+      Current[key]
     end
 
     def []=(key, value)
-      Current[store_key_for(key)] = value
+      Current[key] = value
     end
   end
+
+  Store.register(:current_attributes_store, CurrentAttributesStore)
 end

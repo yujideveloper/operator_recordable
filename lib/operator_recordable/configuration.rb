@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
+require "operator_recordable/store"
+
 module OperatorRecordable
   class Configuration
     VALID_ACTIONS = %i[create update destroy].freeze
 
+    attr_reader :store
+
     def initialize(config)
       @config = initialize_config(config)
-
-      return if Array(config[:actions]).all?(&VALID_ACTIONS.method(:include?))
-      raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
+      initialize_store
     end
 
     %i[operator_class_name creator_column_name updater_column_name deleter_column_name
@@ -16,18 +18,6 @@ module OperatorRecordable
       define_method name do
         config[name]
       end
-    end
-
-    def record_creator?
-      config[:actions].include? :create
-    end
-
-    def record_updater?
-      config[:actions].include? :update
-    end
-
-    def record_deleter?
-      config[:actions].include? :destroy
     end
 
     private
@@ -40,17 +30,22 @@ module OperatorRecordable
         creator_column_name: "created_by",
         updater_column_name: "updated_by",
         deleter_column_name: "deleted_by",
-        actions: VALID_ACTIONS,
         operator_association_options: {},
-        operator_association_scope: nil
+        operator_association_scope: nil,
+        store: :thread_store
       }.merge!(config || {}).freeze
+    end
+
+    def initialize_store
+      args = [*config[:store]]
+      name = args.shift
+      @store = Store.fetch_class(name).new(*args)
     end
 
     class Model
       def initialize(actions)
         @actions = actions
-        return if actions.all?(&VALID_ACTIONS.method(:include?))
-        raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
+        assert_actions
       end
 
       def record_creator?
@@ -68,6 +63,11 @@ module OperatorRecordable
       private
 
       attr_reader :actions
+
+      def assert_actions
+        return if actions.all?(&VALID_ACTIONS.method(:include?))
+        raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
+      end
     end
   end
 end

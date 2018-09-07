@@ -4,26 +4,11 @@ require "operator_recordable/store"
 require "operator_recordable/configuration"
 
 module OperatorRecordable
-  class Recorder < ::Module
-    attr_reader :configuration
-
-    def initialize(config = {})
-      @store = config.delete(:store) || ThreadStore.new
-      @configuration = Configuration.new(config)
-    end
-
-    def operator
-      @store[configuration.operator_class_name]
-    end
-
-    def operator=(operator)
-      @store[configuration.operator_class_name] = operator
-    end
-
+  module Recorder
     class InstanceMethodsBuilder < ::Module
       def initialize(store, config)
         define_method :operator do
-          store[config.operator_class_name]
+          store[Store.operator_store_key]
         end
 
         define_method :assign_creator do
@@ -55,54 +40,50 @@ module OperatorRecordable
     class ClassMethodsBuilder < ::Module
       def initialize(store, config)
         define_method :operator do
-          store[config.operator_class_name]
+          store[Store.operator_store_key]
         end
 
         define_method :record_operator_on do |*actions|
           @_record_operator_on = Configuration::Model.new(actions)
+
+          before_create  :assign_creator if record_creator?
+          before_save    :assign_updater if record_updater?
+          before_destroy :assign_deleter if record_deleter?
+
+          if record_creator?
+            belongs_to :creator, config.operator_association_scope,
+                       { foreign_key: config.creator_column_name,
+                         class_name: config.operator_class_name }.merge(config.operator_association_options)
+          end
+          if record_updater?
+            belongs_to :updater, config.operator_association_scope,
+                       { foreign_key: config.updater_column_name,
+                         class_name: config.operator_class_name }.merge(config.operator_association_options)
+          end
+          if record_deleter?
+            belongs_to :deleter, config.operator_association_scope,
+                       { foreign_key: config.deleter_column_name,
+                         class_name: config.operator_class_name }.merge(config.operator_association_options)
+          end
         end
 
         define_method :record_creator? do
-          config.record_creator? &&
-            (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_creator?)
+          instance_variable_defined?(:@_record_operator_on) &&
+            @_record_operator_on.record_creator?
         end
         private :record_creator?
 
         define_method :record_updater? do
-          config.record_updater? &&
-            (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_updater?)
+          instance_variable_defined?(:@_record_operator_on) &&
+            @_record_operator_on.record_updater?
         end
         private :record_updater?
 
         define_method :record_deleter? do
-          config.record_deleter? &&
-            (!instance_variable_defined?(:@_record_operator_on) || @_record_operator_on.record_deleter?)
+          instance_variable_defined?(:@_record_operator_on) &&
+            @_record_operator_on.record_deleter?
         end
         private :record_deleter?
-      end
-    end
-
-    def included(class_or_module)
-      class_or_module.include InstanceMethodsBuilder.new(@store, configuration)
-      class_or_module.extend  ClassMethodsBuilder.new(@store, configuration)
-
-      class_or_module.class_exec(configuration) do |c|
-        before_create  :assign_creator if record_creator?
-        before_save    :assign_updater if record_updater?
-        before_destroy :assign_deleter if record_deleter?
-
-        if record_creator?
-          belongs_to :creator, c.operator_association_scope,
-                     { foreign_key: c.creator_column_name, class_name: c.operator_class_name }.merge(c.operator_association_options)
-        end
-        if record_updater?
-          belongs_to :updater, c.operator_association_scope,
-                     { foreign_key: c.updater_column_name, class_name: c.operator_class_name }.merge(c.operator_association_options)
-        end
-        if record_deleter?
-          belongs_to :deleter, c.operator_association_scope,
-                     { foreign_key: c.deleter_column_name, class_name: c.operator_class_name }.merge(c.operator_association_options)
-        end
       end
     end
   end
