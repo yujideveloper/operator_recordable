@@ -28,7 +28,7 @@ RSpec.describe OperatorRecordable::Store do
       let(:name) { :current_attributes_store }
 
       if defined? ::ActiveSupport::CurrentAttributes
-        it { is_expected.to eq OperatorRecordable::CurrentAttributesStore  }
+        it { is_expected.to eq OperatorRecordable::CurrentAttributesStore }
       else
         it { expect { subject }.to raise_error KeyError }
       end

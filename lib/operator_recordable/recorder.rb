@@ -69,7 +69,7 @@ module OperatorRecordable
                          class_name: config.operator_class_name }.merge(config.operator_association_options)
           end
           if record_updater?
-            before_save  :assign_updater
+            before_save :assign_updater
             belongs_to :updater, config.operator_association_scope,
                        { foreign_key: config.updater_column_name,
                          class_name: config.operator_class_name }.merge(config.operator_association_options)
