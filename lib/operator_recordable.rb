@@ -16,7 +16,7 @@ module OperatorRecordable
   end
 
   def self.store
-    self.config.store
+    config.store
   end
 
   def self.operator
