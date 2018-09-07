@@ -46,7 +46,7 @@ module OperatorRecordable
       }.merge!(config || {}).freeze
     end
 
-    class PerModel
+    class Model
       def initialize(actions)
         @actions = actions
         return if actions.all?(&VALID_ACTIONS.method(:include?))

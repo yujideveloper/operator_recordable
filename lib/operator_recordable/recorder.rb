@@ -59,7 +59,7 @@ module OperatorRecordable
         end
 
         define_method :record_operator_on do |*actions|
-          @_record_operator_on = Configuration::PerModel.new(actions)
+          @_record_operator_on = Configuration::Model.new(actions)
         end
 
         define_method :record_creator? do
