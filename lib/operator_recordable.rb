@@ -15,10 +15,6 @@ module OperatorRecordable
     @config = Configuration.new(config)
   end
 
-  def self.store
-    config.store
-  end
-
   def self.operator
     config.store[Store.operator_store_key]
   end
@@ -29,7 +25,7 @@ module OperatorRecordable
 
   def self.included(class_or_module)
     config = OperatorRecordable.config
-    store = OperatorRecordable.store
+    store = config.store
 
     class_or_module.include Recorder::InstanceMethodsBuilder.new(store, config)
     class_or_module.extend Recorder::ClassMethodsBuilder.new(store, config)
