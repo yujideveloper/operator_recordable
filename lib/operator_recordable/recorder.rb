@@ -62,21 +62,20 @@ module OperatorRecordable
         define_method :record_operator_on do |*actions|
           @_record_operator_on = Configuration::Model.new(actions)
 
-          before_create  :assign_creator if record_creator?
-          before_save    :assign_updater if record_updater?
-          before_destroy :assign_deleter if record_deleter?
-
           if record_creator?
+            before_create :assign_creator
             belongs_to :creator, config.operator_association_scope,
                        { foreign_key: config.creator_column_name,
                          class_name: config.operator_class_name }.merge(config.operator_association_options)
           end
           if record_updater?
+            before_save  :assign_updater
             belongs_to :updater, config.operator_association_scope,
                        { foreign_key: config.updater_column_name,
                          class_name: config.operator_class_name }.merge(config.operator_association_options)
           end
           if record_deleter?
+            before_destroy :assign_deleter
             belongs_to :deleter, config.operator_association_scope,
                        { foreign_key: config.deleter_column_name,
                          class_name: config.operator_class_name }.merge(config.operator_association_options)
