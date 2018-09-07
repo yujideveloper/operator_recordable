@@ -2,6 +2,7 @@
 
 require "bundler/setup"
 require "active_record"
+require "request_store"
 require "operator_recordable"
 
 RSpec.configure do |config|
