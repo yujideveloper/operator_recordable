@@ -9,4 +9,4 @@ gemfile:
   - gemfiles/activerecord_5.0.gemfile
   - gemfiles/activerecord_5.1.gemfile
   - gemfiles/activerecord_5.2.gemfile
-before_install: gem install bundler -v 1.16.3
+before_install: gem install bundler -v 1.16.4
