@@ -43,9 +43,10 @@ OperatorRecordable.config = {
 }
 ```
 
-Options
+##### Options
+
 | Name | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
+|:-----|:-----|:------------|:--------|
 | `operator_class_name` | String | class name of your operator model. | `"Operator"` |
 | `creator_column_name` | String | column name of creator. | `"created_by"` |
 | `updater_column_name` | String | column name of updater. | `"updated_by"` |
