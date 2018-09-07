@@ -2,14 +2,13 @@
 
 require "operator_recordable/store"
 require "operator_recordable/configuration"
+require "operator_recordable/operator"
 
 module OperatorRecordable
   module Recorder
     class InstanceMethodsBuilder < ::Module
       def initialize(store, config)
-        define_method :operator do
-          store[Store.operator_store_key]
-        end
+        include Operator::ReaderMethodBuilder.new(store)
 
         define_method :assign_creator do
           return unless (op = self.operator)
@@ -39,9 +38,7 @@ module OperatorRecordable
 
     class ClassMethodsBuilder < ::Module
       def initialize(store, config)
-        define_method :operator do
-          store[Store.operator_store_key]
-        end
+        include Operator::ReaderMethodBuilder.new(store)
 
         define_method :record_operator_on do |*actions|
           @_record_operator_on = Configuration::Model.new(actions)
