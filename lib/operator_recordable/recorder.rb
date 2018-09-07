@@ -56,30 +56,48 @@ module OperatorRecordable
         define_predicate_methods
       end
 
+      class CallbackBuilder < ::Module
+        def initialize(class_or_module, _config)
+          class_or_module.class_exec do
+            before_create  :assign_creator if record_creator?
+            before_save    :assign_updater if record_updater?
+            before_destroy :assign_deleter if record_deleter?
+          end
+        end
+      end
+      private_constant :CallbackBuilder
+
+      class AssociationBuilder < ::Module
+        def initialize(class_or_module, config)
+          class_or_module.class_exec do
+            if record_creator?
+              belongs_to :creator, config.operator_association_scope,
+                         { foreign_key: config.creator_column_name,
+                           class_name: config.operator_class_name }.merge(config.operator_association_options)
+            end
+            if record_updater?
+              belongs_to :updater, config.operator_association_scope,
+                         { foreign_key: config.updater_column_name,
+                           class_name: config.operator_class_name }.merge(config.operator_association_options)
+            end
+            if record_deleter?
+              belongs_to :deleter, config.operator_association_scope,
+                         { foreign_key: config.deleter_column_name,
+                           class_name: config.operator_class_name }.merge(config.operator_association_options)
+            end
+          end
+        end
+      end
+      private_constant :AssociationBuilder
+
       private
 
       def define_activate_method(config)
         define_method :record_operator_on do |*actions|
           @_record_operator_on = Configuration::Model.new(actions)
 
-          if record_creator?
-            before_create :assign_creator
-            belongs_to :creator, config.operator_association_scope,
-                       { foreign_key: config.creator_column_name,
-                         class_name: config.operator_class_name }.merge(config.operator_association_options)
-          end
-          if record_updater?
-            before_save :assign_updater
-            belongs_to :updater, config.operator_association_scope,
-                       { foreign_key: config.updater_column_name,
-                         class_name: config.operator_class_name }.merge(config.operator_association_options)
-          end
-          if record_deleter?
-            before_destroy :assign_deleter
-            belongs_to :deleter, config.operator_association_scope,
-                       { foreign_key: config.deleter_column_name,
-                         class_name: config.operator_class_name }.merge(config.operator_association_options)
-          end
+          CallbackBuilder.new(self, config)
+          AssociationBuilder.new(self, config)
         end
       end
 
