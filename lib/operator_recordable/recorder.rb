@@ -10,19 +10,31 @@ module OperatorRecordable
       def initialize(store, config)
         include Operator::ReaderMethodBuilder.new(store)
 
+        define_creator_method(config)
+        define_updater_method(config)
+        define_deleter_method(config)
+      end
+
+      private
+
+      def define_creator_method(config)
         define_method :assign_creator do
           return unless (op = self.operator)
           self.__send__(:"#{config.creator_column_name}=", op.id)
         end
         private :assign_creator
+      end
 
+      def define_updater_method(config)
         define_method :assign_updater do
           return if !self.new_record? && !self.changed?
           return unless (op = self.operator)
           self.__send__(:"#{config.updater_column_name}=", op.id)
         end
         private :assign_updater
+      end
 
+      def define_deleter_method(config)
         define_method :assign_deleter do
           return if self.frozen?
           return unless (op = self.operator)
@@ -40,6 +52,13 @@ module OperatorRecordable
       def initialize(store, config)
         include Operator::ReaderMethodBuilder.new(store)
 
+        define_activate_method(config)
+        define_predicate_methods
+      end
+
+      private
+
+      def define_activate_method(config)
         define_method :record_operator_on do |*actions|
           @_record_operator_on = Configuration::Model.new(actions)
 
@@ -63,7 +82,9 @@ module OperatorRecordable
                          class_name: config.operator_class_name }.merge(config.operator_association_options)
           end
         end
+      end
 
+      def define_predicate_methods
         define_method :record_creator? do
           instance_variable_defined?(:@_record_operator_on) &&
             @_record_operator_on.record_creator?
