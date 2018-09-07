@@ -10,5 +10,6 @@ module OperatorRecordable
       ::RequestStore.store[key] = value
     end
   end
+
   Store.register(:request_store, RequestStore)
 end
