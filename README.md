@@ -26,7 +26,94 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Configuration
+
+#### Initialize `OperatorRecordable`
+
+``` ruby
+# config/initializers/operator_recordable.rb
+OperatorRecordable.config = {
+  operator_class_name: "Operator",
+  creator_column_name: "created_by",
+  updater_column_name: "updated_by",
+  deleter_column_name: "deleted_by",
+  operator_association_options: {},
+  operator_association_scope: nil,
+  store: :thread_store
+}
+```
+
+Options
+| Name | Type | Description | Default |
+| ---- | ---- | ----------- | ------- |
+| `operator_class_name` | String | class name of your operator model. | `"Operator"` |
+| `creator_column_name` | String | column name of creator. | `"created_by"` |
+| `updater_column_name` | String | column name of updater. | `"updated_by"` |
+| `deleter_column_name` | String | column name of deleter. | `"deleted_by"` |
+| `operator_association_options` | Hash | options of operator associations. e.g. `{ optional: true }` | `{}` |
+| `operator_association_scope` | Proc | The scope of operator associations. e.g. `-> { with_deleted }`  | `nil` |
+| `store` | Enum | operator store. any value of `:thread_store`, `:request_store` or `current_attributes_store` | `:thread_store` |
+
+#### Include `OperatorRecordable` in your model
+
+``` ruby
+class ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
+
+  include OperatorRecordable
+end
+```
+
+#### Activate `OperatorRecordable` in your model
+
+You can specify which action you want to save operator like this.
+``` ruby
+class Post < ApplicationRecord
+  record_operator_on :create, :update, :destroy
+end
+```
+
+OperatorRecordable needs to know who is currently operating. For that, you need to set operator through a following way in a `before_action` callback, etc.
+``` ruby
+OperatorRecordable.operator = current_operator
+```
+
+### Stores
+
+#### `:thread_store`
+
+This store is implemented by `Thread.current`.  
+This is default store.
+
+
+#### `:request_store`
+
+This store is implemented by using [RequestStore gem](https://github.com/steveklabnik/request_store).  
+So, this requires RequestStore gem.
+
+RequestStore must be required before OperatorRecordable.
+
+``` ruby
+gem "request_store"
+gem "operator_recordable"
+```
+Or
+
+``` ruby
+require "request_store"
+require "operator_recordable"
+```
+
+Otherwise, you need to require it yourself.
+``` ruby
+require "operator_recordable/store/request_store"
+```
+
+#### `:current_attributes_store`
+
+This store is implemented by using [`ActiveSupport::CurrentAttributes`](https://api.rubyonrails.org/v5.2.0/classes/ActiveSupport/CurrentAttributes.html).  
+So, this requires ActivgeSupport 5.2 or later.
+
 
 ## Development
 
