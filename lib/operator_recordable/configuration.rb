@@ -4,8 +4,6 @@ require "operator_recordable/store"
 
 module OperatorRecordable
   class Configuration
-    VALID_ACTIONS = %i[create update destroy].freeze
-
     attr_reader :store
 
     def initialize(config)
@@ -43,6 +41,8 @@ module OperatorRecordable
     end
 
     class Model
+      VALID_ACTIONS = %i[create update destroy].freeze
+
       def initialize(actions)
         @actions = actions
         assert_actions
