@@ -21,7 +21,6 @@ module OperatorRecordable
         @_record_operator_on = Configuration::Model.new(actions)
 
         include operator_reader_module
-        extend operator_reader_module
 
         if record_creator?
           m.__send__(:run_creator_dsl, self, config)
