@@ -24,9 +24,6 @@ module OperatorRecordable
   end
 
   def self.included(class_or_module)
-    config = OperatorRecordable.config
-    store = config.store
-
-    class_or_module.extend Recorder.new(store, config)
+    class_or_module.extend Recorder.new(config.store, config)
   end
 end
