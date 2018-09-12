@@ -27,7 +27,6 @@ module OperatorRecordable
     config = OperatorRecordable.config
     store = config.store
 
-    class_or_module.include Recorder::InstanceMethodsBuilder.new(store, config)
-    class_or_module.extend Recorder::ClassMethodsBuilder.new(store, config)
+    class_or_module.extend Recorder.new(store, config)
   end
 end
