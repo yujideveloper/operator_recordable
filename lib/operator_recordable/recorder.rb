@@ -16,6 +16,7 @@ module OperatorRecordable
     def define_activate_method(store, config)
       operator_reader_module = Operator::ReaderMethodBuilder.new(store)
       m = self
+
       define_method :record_operator_on do |*actions|
         @_record_operator_on = Configuration::Model.new(actions)
 

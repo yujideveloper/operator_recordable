@@ -66,6 +66,7 @@ module OperatorRecordable
 
       def assert_actions
         return if actions.all?(&VALID_ACTIONS.method(:include?))
+
         raise ArgumentError, "valid actions are #{VALID_ACTIONS.inspect}."
       end
     end

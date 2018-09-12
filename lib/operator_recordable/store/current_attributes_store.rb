@@ -7,6 +7,7 @@ module OperatorRecordable
 
       def [](key)
         return nil unless self.store
+
         self.store[key]
       end
 
