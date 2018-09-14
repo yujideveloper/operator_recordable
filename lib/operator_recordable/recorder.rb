@@ -2,7 +2,6 @@
 
 require "operator_recordable/store"
 require "operator_recordable/configuration"
-require "operator_recordable/operator"
 
 module OperatorRecordable
   class Recorder < ::Module
@@ -14,13 +13,10 @@ module OperatorRecordable
     private
 
     def define_activate_method(store, config)
-      operator_reader_module = Operator::ReaderMethodBuilder.new(store)
       m = self
 
       define_method :record_operator_on do |*actions|
         @_record_operator_on = Configuration::Model.new(actions)
-
-        include operator_reader_module
 
         if record_creator?
           m.__send__(:run_creator_dsl, self, config)
@@ -67,42 +63,39 @@ module OperatorRecordable
     end
 
     def define_creator_instance_methods(class_or_module, config)
-      class_or_module.class_exec do
-        define_method :assign_creator do
-          return unless (op = self.operator)
+      class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
+        private def assign_creator
+          return unless (op = OperatorRecordable.operator)
 
-          self.__send__(:"#{config.creator_column_name}=", op.id)
+          self.#{config.creator_column_name} = op.id
         end
-        private :assign_creator
-      end
+      END_OF_DEF
     end
 
     def define_updater_instance_methods(class_or_module, config)
-      class_or_module.class_exec do
-        define_method :assign_updater do
+      class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
+        private def assign_updater
           return if !self.new_record? && !self.changed?
-          return unless (op = self.operator)
+          return unless (op = OperatorRecordable.operator)
 
-          self.__send__(:"#{config.updater_column_name}=", op.id)
+          self.#{config.updater_column_name} = op.id
         end
-        private :assign_updater
-      end
+      END_OF_DEF
     end
 
     def define_deleter_instance_methods(class_or_module, config)
-      class_or_module.class_exec do
-        define_method :assign_deleter do
+      class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
+        private def assign_deleter
           return if self.frozen?
-          return unless (op = self.operator)
+          return unless (op = OperatorRecordable.operator)
 
           self
             .class
             .where(self.class.primary_key => id)
-            .update_all(config.deleter_column_name => op.id)
-          self.__send__(:"#{config.deleter_column_name}=", op.id)
+            .update_all('#{config.deleter_column_name}' => op.id)
+          self.#{config.deleter_column_name} = op.id
         end
-        private :assign_deleter
-      end
+      END_OF_DEF
     end
 
     def define_predicate_methods
