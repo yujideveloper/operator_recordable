@@ -1,5 +1,6 @@
 # OperatorRecordable
 
+[![Gem Version](https://badge.fury.io/rb/operator_recordable.svg)](https://badge.fury.io/rb/operator_recordable)
 [![Build Status](https://travis-ci.org/yujideveloper/operator_recordable.svg?branch=master)](https://travis-ci.org/yujideveloper/operator_recordable)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aaa0fcd567da9232a847/maintainability)](https://codeclimate.com/github/yujideveloper/operator_recordable/maintainability)
 
