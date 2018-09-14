@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
-require "operator_recordable/store"
 require "operator_recordable/configuration"
 
 module OperatorRecordable
   class Recorder < ::Module
-    def initialize(store, config)
-      define_activate_method(store, config)
+    def initialize(config)
+      define_activate_method(config)
       define_predicate_methods
     end
 
     private
 
-    def define_activate_method(store, config)
+    def define_activate_method(config)
       m = self
 
       define_method :record_operator_on do |*actions|
