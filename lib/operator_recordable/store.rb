@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OperatorRecordable
-  class Store
+  module Store
     def self.operator_store_key
       :operator_recordable_operator
     end
