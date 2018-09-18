@@ -8,7 +8,7 @@ module OperatorRecordable
 
     def initialize(config)
       @config = initialize_config(config)
-      initialize_store
+      @store = initialize_store
     end
 
     %i[operator_class_name creator_column_name updater_column_name deleter_column_name
@@ -37,7 +37,7 @@ module OperatorRecordable
     def initialize_store
       args = [*config[:store]]
       name = args.shift
-      @store = Store.fetch_class(name).new(*args)
+      Store.fetch(name).new(*args)
     end
 
     class Model

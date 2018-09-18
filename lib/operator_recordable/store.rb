@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 module OperatorRecordable
-  class Store
-    def self.operator_store_key
-      :operator_recordable_operator
-    end
-
+  module Store
     def self.register(name, klass)
       @stores ||= {}
       @stores[name] = klass
     end
 
-    def self.fetch_class(name)
+    def self.fetch(name)
       @stores.fetch(name)
     end
   end

@@ -3,14 +3,8 @@
 require "spec_helper"
 
 RSpec.describe OperatorRecordable::Store do
-  describe ".operator_store_key" do
-    subject { described_class.operator_store_key }
-
-    it { is_expected.to eq :operator_recordable_operator }
-  end
-
-  describe ".fetch_class" do
-    subject { described_class.fetch_class(name) }
+  describe ".fetch" do
+    subject { described_class.fetch(name) }
 
     context "when :thread_store is passed" do
       let(:name) { :thread_store }
