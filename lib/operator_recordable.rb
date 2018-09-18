@@ -26,6 +26,7 @@ module OperatorRecordable
   def self.included(class_or_module)
     class_or_module.extend Recorder.new(config)
   end
+  private_class_method :included
 
   def self.operator_store_key
     :operator_recordable_operator
