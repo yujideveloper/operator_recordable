@@ -16,14 +16,19 @@ module OperatorRecordable
   end
 
   def self.operator
-    config.store[Store.operator_store_key]
+    config.store[operator_store_key]
   end
 
   def self.operator=(operator)
-    config.store[Store.operator_store_key] = operator
+    config.store[operator_store_key] = operator
   end
 
   def self.included(class_or_module)
     class_or_module.extend Recorder.new(config)
   end
+
+  def self.operator_store_key
+    :operator_recordable_operator
+  end
+  private_class_method :operator_store_key
 end

@@ -2,10 +2,6 @@
 
 module OperatorRecordable
   module Store
-    def self.operator_store_key
-      :operator_recordable_operator
-    end
-
     def self.register(name, klass)
       @stores ||= {}
       @stores[name] = klass
