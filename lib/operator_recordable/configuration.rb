@@ -37,7 +37,7 @@ module OperatorRecordable
     def initialize_store
       args = [*config[:store]]
       name = args.shift
-      Store.fetch_class(name).new(*args)
+      Store.fetch(name).new(*args)
     end
 
     class Model

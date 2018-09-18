@@ -11,7 +11,7 @@ module OperatorRecordable
       @stores[name] = klass
     end
 
-    def self.fetch_class(name)
+    def self.fetch(name)
       @stores.fetch(name)
     end
   end
