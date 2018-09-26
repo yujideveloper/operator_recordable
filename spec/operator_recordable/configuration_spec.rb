@@ -179,4 +179,112 @@ RSpec.describe OperatorRecordable::Configuration do
       it { is_expected.to eq scope }
     end
   end
+
+  describe "#column_name_for" do
+    subject { described_class.new(config).column_name_for(type) }
+
+    context "when association names are not specified" do
+      let(:config) { {} }
+
+      context "when :creator is passed" do
+        let(:type) { :creator }
+
+        it { is_expected.to eq "created_by" }
+      end
+
+      context "when :updater is passed" do
+        let(:type) { :updater }
+
+        it { is_expected.to eq "updated_by" }
+      end
+
+      context "when :deleter is passed" do
+        let(:type) { :deleter }
+
+        it { is_expected.to eq "deleted_by" }
+      end
+    end
+
+    context "when association names are specified" do
+      let(:config) do
+        {
+          creator_column_name: "creator_operator_id",
+          updater_column_name: "updater_operator_id",
+          deleter_column_name: "deleter_operator_id"
+        }
+      end
+
+      context "when :creator is passed" do
+        let(:type) { :creator }
+
+        it { is_expected.to eq "creator_operator_id" }
+      end
+
+      context "when :updater is passed" do
+        let(:type) { :updater }
+
+        it { is_expected.to eq "updater_operator_id" }
+      end
+
+      context "when :deleter is passed" do
+        let(:type) { :deleter }
+
+        it { is_expected.to eq "deleter_operator_id" }
+      end
+    end
+  end
+
+  describe "#association_name_for" do
+    subject { described_class.new(config).association_name_for(type) }
+
+    context "when column names are not specified" do
+      let(:config) { {} }
+
+      context "when :creator is passed" do
+        let(:type) { :creator }
+
+        it { is_expected.to eq "creator" }
+      end
+
+      context "when :updater is passed" do
+        let(:type) { :updater }
+
+        it { is_expected.to eq "updater" }
+      end
+
+      context "when :deleter is passed" do
+        let(:type) { :deleter }
+
+        it { is_expected.to eq "deleter" }
+      end
+    end
+
+    context "when column names are specified" do
+      let(:config) do
+        {
+          creator_association_name: "creator_operator",
+          updater_association_name: "updater_operator",
+          deleter_association_name: "deleter_operator"
+        }
+      end
+
+      context "when :creator is passed" do
+        let(:type) { :creator }
+
+        it { is_expected.to eq "creator_operator" }
+      end
+
+      context "when :updater is passed" do
+        let(:type) { :updater }
+
+        it { is_expected.to eq "updater_operator" }
+      end
+
+      context "when :deleter is passed" do
+        let(:type) { :deleter }
+
+        it { is_expected.to eq "deleter_operator" }
+      end
+    end
+  end
 end

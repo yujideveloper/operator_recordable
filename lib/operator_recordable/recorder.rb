@@ -35,30 +35,25 @@ module OperatorRecordable
     end
 
     def run_creator_dsl(class_or_module, config)
-      class_or_module.class_exec do
-        before_create :"assign_#{config.creator_association_name}"
-        belongs_to config.creator_association_name.to_sym, config.operator_association_scope,
-                   { foreign_key: config.creator_column_name,
-                     class_name: config.operator_class_name }.merge(config.operator_association_options)
-      end
+      class_or_module.before_create :"assign_#{config.creator_association_name}"
+      run_add_association_dsl(:creator, class_or_module, config)
     end
 
     def run_updater_dsl(class_or_module, config)
-      class_or_module.class_exec do
-        before_save :"assign_#{config.updater_association_name}"
-        belongs_to config.updater_association_name.to_sym, config.operator_association_scope,
-                   { foreign_key: config.updater_column_name,
-                     class_name: config.operator_class_name }.merge(config.operator_association_options)
-      end
+      class_or_module.before_save :"assign_#{config.updater_association_name}"
+      run_add_association_dsl(:updater, class_or_module, config)
     end
 
     def run_deleter_dsl(class_or_module, config)
-      class_or_module.class_exec do
-        before_destroy :"assign_#{config.deleter_association_name}"
-        belongs_to config.deleter_association_name.to_sym, config.operator_association_scope,
-                   { foreign_key: config.deleter_column_name,
-                     class_name: config.operator_class_name }.merge(config.operator_association_options)
-      end
+      class_or_module.before_destroy :"assign_#{config.deleter_association_name}"
+      run_add_association_dsl(:deleter, class_or_module, config)
+    end
+
+    def run_add_association_dsl(type, class_or_module, config)
+      class_or_module.belongs_to config.association_name_for(type).to_sym,
+                                 config.operator_association_scope,
+                                 { foreign_key: config.column_name_for(type),
+                                   class_name: config.operator_class_name }.merge(config.operator_association_options)
     end
 
     def define_creator_instance_methods(class_or_module, config)

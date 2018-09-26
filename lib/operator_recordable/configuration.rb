@@ -19,6 +19,14 @@ module OperatorRecordable
       end
     end
 
+    def column_name_for(type)
+      config[:"#{type}_column_name"]
+    end
+
+    def association_name_for(type)
+      config[:"#{type}_association_name"]
+    end
+
     private
 
     attr_reader :config
