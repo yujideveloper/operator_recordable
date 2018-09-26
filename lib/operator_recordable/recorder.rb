@@ -6,7 +6,7 @@ module OperatorRecordable
   class Recorder < ::Module
     def initialize(config)
       define_activate_method(config)
-      define_predicate_methods
+      define_predicate_methods(config)
     end
 
     private
@@ -17,17 +17,17 @@ module OperatorRecordable
       define_method :record_operator_on do |*actions|
         @_record_operator_on = Configuration::Model.new(actions)
 
-        if record_creator?
+        if __send__(:"record_#{config.creator_association_name}?")
           m.__send__(:run_creator_dsl, self, config)
           m.__send__(:define_creator_instance_methods, self, config)
         end
 
-        if record_updater?
+        if __send__(:"record_#{config.updater_association_name}?")
           m.__send__(:run_updater_dsl, self, config)
           m.__send__(:define_updater_instance_methods, self, config)
         end
 
-        if record_deleter?
+        if __send__(:"record_#{config.deleter_association_name}?")
           m.__send__(:run_deleter_dsl, self, config)
           m.__send__(:define_deleter_instance_methods, self, config)
         end
@@ -36,8 +36,8 @@ module OperatorRecordable
 
     def run_creator_dsl(class_or_module, config)
       class_or_module.class_exec do
-        before_create :assign_creator
-        belongs_to :creator, config.operator_association_scope,
+        before_create :"assign_#{config.creator_association_name}"
+        belongs_to config.creator_association_name.to_sym, config.operator_association_scope,
                    { foreign_key: config.creator_column_name,
                      class_name: config.operator_class_name }.merge(config.operator_association_options)
       end
@@ -45,8 +45,8 @@ module OperatorRecordable
 
     def run_updater_dsl(class_or_module, config)
       class_or_module.class_exec do
-        before_save :assign_updater
-        belongs_to :updater, config.operator_association_scope,
+        before_save :"assign_#{config.updater_association_name}"
+        belongs_to config.updater_association_name.to_sym, config.operator_association_scope,
                    { foreign_key: config.updater_column_name,
                      class_name: config.operator_class_name }.merge(config.operator_association_options)
       end
@@ -54,8 +54,8 @@ module OperatorRecordable
 
     def run_deleter_dsl(class_or_module, config)
       class_or_module.class_exec do
-        before_destroy :assign_deleter
-        belongs_to :deleter, config.operator_association_scope,
+        before_destroy :"assign_#{config.deleter_association_name}"
+        belongs_to config.deleter_association_name.to_sym, config.operator_association_scope,
                    { foreign_key: config.deleter_column_name,
                      class_name: config.operator_class_name }.merge(config.operator_association_options)
       end
@@ -63,7 +63,7 @@ module OperatorRecordable
 
     def define_creator_instance_methods(class_or_module, config)
       class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
-        private def assign_creator
+        private def assign_#{config.creator_association_name}
           return unless (op = OperatorRecordable.operator)
 
           self.#{config.creator_column_name} = op.id
@@ -73,7 +73,7 @@ module OperatorRecordable
 
     def define_updater_instance_methods(class_or_module, config)
       class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
-        private def assign_updater
+        private def assign_#{config.updater_association_name}
           return if !self.new_record? && !self.changed?
           return unless (op = OperatorRecordable.operator)
 
@@ -84,7 +84,7 @@ module OperatorRecordable
 
     def define_deleter_instance_methods(class_or_module, config)
       class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
-        private def assign_deleter
+        private def assign_#{config.deleter_association_name}
           return if self.frozen?
           return unless (op = OperatorRecordable.operator)
 
@@ -97,24 +97,23 @@ module OperatorRecordable
       END_OF_DEF
     end
 
-    def define_predicate_methods
-      define_method :record_creator? do
-        instance_variable_defined?(:@_record_operator_on) &&
-          @_record_operator_on.record_creator?
-      end
-      private :record_creator?
+    def define_predicate_methods(config)
+      self.class_eval <<-END_OF_DEF, __FILE__, __LINE__ + 1
+        private def record_#{config.creator_association_name}?
+          instance_variable_defined?(:@_record_operator_on) &&
+           @_record_operator_on.record_creator?
+        end
 
-      define_method :record_updater? do
-        instance_variable_defined?(:@_record_operator_on) &&
-          @_record_operator_on.record_updater?
-      end
-      private :record_updater?
+        private def record_#{config.updater_association_name}?
+          instance_variable_defined?(:@_record_operator_on) &&
+            @_record_operator_on.record_updater?
+        end
 
-      define_method :record_deleter? do
-        instance_variable_defined?(:@_record_operator_on) &&
-          @_record_operator_on.record_deleter?
-      end
-      private :record_deleter?
+        private def record_#{config.deleter_association_name}?
+          instance_variable_defined?(:@_record_operator_on) &&
+            @_record_operator_on.record_deleter?
+        end
+      END_OF_DEF
     end
   end
 end

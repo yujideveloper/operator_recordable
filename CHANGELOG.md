@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Cbanges
+
+* Add association name options
+
 
 ## 0.1.1 (2018/09/19)
 

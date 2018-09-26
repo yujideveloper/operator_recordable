@@ -12,6 +12,7 @@ module OperatorRecordable
     end
 
     %i[operator_class_name creator_column_name updater_column_name deleter_column_name
+       creator_association_name updater_association_name deleter_association_name
        operator_association_options operator_association_scope].each do |name|
       define_method name do
         config[name]
@@ -28,6 +29,9 @@ module OperatorRecordable
         creator_column_name: "created_by",
         updater_column_name: "updated_by",
         deleter_column_name: "deleted_by",
+        creator_association_name: "creator",
+        updater_association_name: "updater",
+        deleter_association_name: "deleter",
         operator_association_options: {},
         operator_association_scope: nil,
         store: :thread_store

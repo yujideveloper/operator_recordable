@@ -99,6 +99,54 @@ RSpec.describe OperatorRecordable::Configuration do
     end
   end
 
+  describe "#creator_association_name" do
+    subject { described_class.new(config).creator_association_name }
+
+    context "when creator_association_name is not specified" do
+      let(:config) { {} }
+
+      it { is_expected.to eq "creator" }
+    end
+
+    context "when creator_association_name is specified" do
+      let(:config) { { creator_association_name: "created_operator" } }
+
+      it { is_expected.to eq "created_operator" }
+    end
+  end
+
+  describe "#updater_association_name" do
+    subject { described_class.new(config).updater_association_name }
+
+    context "when updater_association_name is not specified" do
+      let(:config) { {} }
+
+      it { is_expected.to eq "updater" }
+    end
+
+    context "when updater_association_name is specified" do
+      let(:config) { { updater_association_name: "updated_operator" } }
+
+      it { is_expected.to eq "updated_operator" }
+    end
+  end
+
+  describe "#deleter_association_name" do
+    subject { described_class.new(config).deleter_association_name }
+
+    context "when deleter_association_name is not specified" do
+      let(:config) { {} }
+
+      it { is_expected.to eq "deleter" }
+    end
+
+    context "when deleter_association_name is specified" do
+      let(:config) { { deleter_association_name: "deleter_operator" } }
+
+      it { is_expected.to eq "deleter_operator" }
+    end
+  end
+
   describe "#operator_association_options" do
     subject { described_class.new(config).operator_association_options }
 
