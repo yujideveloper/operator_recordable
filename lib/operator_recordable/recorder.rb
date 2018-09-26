@@ -6,7 +6,6 @@ module OperatorRecordable
   class Recorder < ::Module
     def initialize(config)
       define_activate_method(config)
-      define_predicate_methods(config)
     end
 
     private
@@ -15,19 +14,19 @@ module OperatorRecordable
       m = self
 
       define_method :record_operator_on do |*actions|
-        @_record_operator_on = Configuration::Model.new(actions)
+        c = Configuration::Model.new(actions)
 
-        if __send__(:"record_#{config.creator_association_name}?")
+        if c.record_creator?
           m.__send__(:run_creator_dsl, self, config)
           m.__send__(:define_creator_instance_methods, self, config)
         end
 
-        if __send__(:"record_#{config.updater_association_name}?")
+        if c.record_updater?
           m.__send__(:run_updater_dsl, self, config)
           m.__send__(:define_updater_instance_methods, self, config)
         end
 
-        if __send__(:"record_#{config.deleter_association_name}?")
+        if c.record_deleter?
           m.__send__(:run_deleter_dsl, self, config)
           m.__send__(:define_deleter_instance_methods, self, config)
         end
@@ -88,25 +87,6 @@ module OperatorRecordable
             .where(self.class.primary_key => id)
             .update_all('#{config.deleter_column_name}' => op.id)
           self.#{config.deleter_column_name} = op.id
-        end
-      END_OF_DEF
-    end
-
-    def define_predicate_methods(config)
-      self.class_eval <<-END_OF_DEF, __FILE__, __LINE__ + 1
-        private def record_#{config.creator_association_name}?
-          instance_variable_defined?(:@_record_operator_on) &&
-           @_record_operator_on.record_creator?
-        end
-
-        private def record_#{config.updater_association_name}?
-          instance_variable_defined?(:@_record_operator_on) &&
-            @_record_operator_on.record_updater?
-        end
-
-        private def record_#{config.deleter_association_name}?
-          instance_variable_defined?(:@_record_operator_on) &&
-            @_record_operator_on.record_deleter?
         end
       END_OF_DEF
     end
