@@ -34,30 +34,30 @@ module OperatorRecordable
       end
     end
 
-    def run_creator_dsl(class_or_module, config)
-      class_or_module.before_create :"assign_#{config.creator_association_name}"
-      run_add_association_dsl(:creator, class_or_module, config)
+    def run_creator_dsl(klass, config)
+      klass.before_create :"assign_#{config.creator_association_name}"
+      run_add_association_dsl(:creator, klass, config)
     end
 
-    def run_updater_dsl(class_or_module, config)
-      class_or_module.before_save :"assign_#{config.updater_association_name}"
-      run_add_association_dsl(:updater, class_or_module, config)
+    def run_updater_dsl(klass, config)
+      klass.before_save :"assign_#{config.updater_association_name}"
+      run_add_association_dsl(:updater, klass, config)
     end
 
-    def run_deleter_dsl(class_or_module, config)
-      class_or_module.before_destroy :"assign_#{config.deleter_association_name}"
-      run_add_association_dsl(:deleter, class_or_module, config)
+    def run_deleter_dsl(klass, config)
+      klass.before_destroy :"assign_#{config.deleter_association_name}"
+      run_add_association_dsl(:deleter, klass, config)
     end
 
-    def run_add_association_dsl(type, class_or_module, config)
-      class_or_module.belongs_to config.association_name_for(type).to_sym,
-                                 config.operator_association_scope,
-                                 { foreign_key: config.column_name_for(type),
-                                   class_name: config.operator_class_name }.merge(config.operator_association_options)
+    def run_add_association_dsl(type, klass, config)
+      klass.belongs_to config.association_name_for(type).to_sym,
+                       config.operator_association_scope,
+                       { foreign_key: config.column_name_for(type),
+                         class_name: config.operator_class_name }.merge(config.operator_association_options)
     end
 
-    def define_creator_instance_methods(class_or_module, config)
-      class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
+    def define_creator_instance_methods(klass, config)
+      klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
         private def assign_#{config.creator_association_name}
           return unless (op = OperatorRecordable.operator)
 
@@ -66,8 +66,8 @@ module OperatorRecordable
       END_OF_DEF
     end
 
-    def define_updater_instance_methods(class_or_module, config)
-      class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
+    def define_updater_instance_methods(klass, config)
+      klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
         private def assign_#{config.updater_association_name}
           return if !self.new_record? && !self.changed?
           return unless (op = OperatorRecordable.operator)
@@ -77,8 +77,8 @@ module OperatorRecordable
       END_OF_DEF
     end
 
-    def define_deleter_instance_methods(class_or_module, config)
-      class_or_module.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
+    def define_deleter_instance_methods(klass, config)
+      klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
         private def assign_#{config.deleter_association_name}
           return if self.frozen?
           return unless (op = OperatorRecordable.operator)
