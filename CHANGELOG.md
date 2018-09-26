@@ -5,6 +5,10 @@
 * Add association name options
 * Modify not to define unnecessary class methods for ActiveRecord model
 
+### Misc
+
+* Remove unecessary `require`
+
 
 ## 0.1.1 (2018/09/19)
 
