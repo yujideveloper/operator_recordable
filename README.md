@@ -38,6 +38,9 @@ OperatorRecordable.config = {
   creator_column_name: "created_by",
   updater_column_name: "updated_by",
   deleter_column_name: "deleted_by",
+  creator_association_name: "creator",
+  updater_association_name: "updater",
+  deleter_association_name: "deleter",
   operator_association_options: {},
   operator_association_scope: nil,
   store: :thread_store
@@ -52,6 +55,9 @@ OperatorRecordable.config = {
 | `creator_column_name` | String | column name of creator. | `"created_by"` |
 | `updater_column_name` | String | column name of updater. | `"updated_by"` |
 | `deleter_column_name` | String | column name of deleter. | `"deleted_by"` |
+| `creator_association_name` | String | association name of creator. | `"creator"` |
+| `updater_association_name` | String | association name of updater. | `"updater"` |
+| `deleter_association_name` | String | association name of deleter. | `"deleter"` |
 | `operator_association_options` | Hash | options of operator associations. e.g. `{ optional: true }` | `{}` |
 | `operator_association_scope` | Proc | The scope of operator associations. e.g. `-> { with_deleted }`  | `nil` |
 | `store` | Enum | operator store. any value of `:thread_store`, `:request_store` or `current_attributes_store` | `:thread_store` |
