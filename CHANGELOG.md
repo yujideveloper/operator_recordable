@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Breaking changes
+
+* Change mixin module from `OperatorRecordable` to `OperatorRecordable::Extension`
+
 
 ## 0.2.0 (2018-09-27)
 

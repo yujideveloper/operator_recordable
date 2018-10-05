@@ -32,7 +32,7 @@ CreateAllTables.up
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  include OperatorRecordable
+  include OperatorRecordable::Extension
 end
 
 class Operator < ApplicationRecord
