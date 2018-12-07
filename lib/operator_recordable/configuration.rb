@@ -31,7 +31,7 @@ module OperatorRecordable
 
     attr_reader :config
 
-    def initialize_config(config)
+    def initialize_config(config) # rubocop:disable Metrics/MethodLength
       {
         operator_class_name: "Operator",
         creator_column_name: "created_by",
