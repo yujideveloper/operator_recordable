@@ -10,10 +10,10 @@ module OperatorRecordable
 
     private
 
-    def define_activate_method(config)
+    def define_activate_method(config) # rubocop:disable Metrics/MethodLength
       m = self
 
-      define_method :record_operator_on do |*actions|
+      define_method :record_operator_on do |*actions| # rubocop:disable Metrics/MethodLength
         c = Configuration::Model.new(actions)
 
         if c.record_creator?

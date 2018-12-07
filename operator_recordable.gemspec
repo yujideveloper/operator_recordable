@@ -4,14 +4,23 @@ lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "operator_recordable/version"
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.name          = "operator_recordable"
   spec.version       = OperatorRecordable::VERSION
   spec.authors       = ["Yuji Hanamura"]
   spec.email         = ["yuji.developer@gmail.com"]
 
-  spec.summary       = "OperatorRecordable is a Rails plugin to set created_by, updated_by, and deleted_by to ActiveRecord objects."
-  spec.description   = "OperatorRecordable is a Rails plugin that makes your ActiveRecord models to be saved or logically deleted with automatically set created_by, updated_by, and deleted_by. Also it makes creator, updater, deleter belongs_to association if a class has created_by, updated_by, or deleted_by."
+  spec.summary       = <<~SUMMARY.tr("\n", " ")
+    OperatorRecordable is a Rails plugin to set created_by, updated_by, and
+    deleted_by to ActiveRecord objects.
+  SUMMARY
+  spec.description   = <<~DESC.tr("\n", " ") # rubocop:disable Layout/ExtraSpacing, Layout/SpaceAroundOperators
+    OperatorRecordable is a Rails plugin that makes your ActiveRecord models
+    to be saved or logically deleted with automatically set created_by,
+    updated_by, and deleted_by. Also it makes creator, updater, deleter
+    belongs_to association if a class has created_by, updated_by, or
+    deleted_by.
+  DESC
   spec.homepage      = "https://github.com/yujideveloper/operator_recordable"
   spec.license       = "MIT"
 
@@ -30,5 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "request_store"
   spec.add_development_dependency "rspec", "~> 3.7"
+  spec.add_development_dependency "rubocop", ">= 0.61.1"
   spec.add_development_dependency "sqlite3", "~> 1.0"
 end
