@@ -60,7 +60,7 @@ OperatorRecordable.config = {
 | `deleter_association_name` | String | association name of deleter. | `"deleter"` |
 | `operator_association_options` | Hash | options of operator associations. e.g. `{ optional: true }` | `{}` |
 | `operator_association_scope` | Proc | The scope of operator associations. e.g. `-> { with_deleted }`  | `nil` |
-| `store` | Enum | operator store. any value of `:thread_store`, `:request_store` or `current_attributes_store` | `:thread_store` |
+| `store` | Enum | operator store. any value of `:thread_store`, `:request_store` or `:current_attributes_store` | `:thread_store` |
 
 #### Include `OperatorRecordable` in your model
 
