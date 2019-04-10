@@ -120,7 +120,7 @@ require "operator_recordable/store/request_store"
 #### `:current_attributes_store`
 
 This store is implemented by using [`ActiveSupport::CurrentAttributes`](https://api.rubyonrails.org/v5.2.0/classes/ActiveSupport/CurrentAttributes.html).  
-So, this requires ActivgeSupport 5.2 or later.
+So, this requires ActiveSupport 5.2 or later.
 
 
 ## Development
