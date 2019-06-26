@@ -6,6 +6,7 @@ rvm:
   - 2.4.6
   - 2.5.5
   - 2.6.3
+  - 2.7.0-preview1
 gemfile:
   - gemfiles/activerecord_5.0.gemfile
   - gemfiles/activerecord_5.0_with_request_store.gemfile
@@ -13,3 +14,6 @@ gemfile:
   - gemfiles/activerecord_5.1_with_request_store.gemfile
   - gemfiles/activerecord_5.2.gemfile
   - gemfiles/activerecord_5.2_with_request_store.gemfile
+matrix:
+  allow_failures:
+    rvm: 2.7.0-preview1
