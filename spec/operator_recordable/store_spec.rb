@@ -15,7 +15,11 @@ RSpec.describe OperatorRecordable::Store do
     context "when :request_store is passed" do
       let(:name) { :request_store }
 
-      it { is_expected.to eq OperatorRecordable::RequestStore }
+      if defined? ::RequestStore
+        it { is_expected.to eq OperatorRecordable::RequestStore }
+      else
+        it { expect { subject }.to raise_error KeyError }
+      end
     end
 
     context "when :current_attributes_store is passed" do

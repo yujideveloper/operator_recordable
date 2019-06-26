@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Misc
+
+* Improve rspec and CI
+
 
 ## 0.3.0 (2018-10-05)
 

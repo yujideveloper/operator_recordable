@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+return unless defined? ::RequestStore
+
 require "spec_helper"
 
 RSpec.describe OperatorRecordable::RequestStore do

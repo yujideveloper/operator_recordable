@@ -21,7 +21,11 @@ RSpec.describe OperatorRecordable::Configuration do
     context "when store is :request_store" do
       let(:config) { { store: :request_store } }
 
-      it { is_expected.to be_an_instance_of OperatorRecordable::RequestStore }
+      if defined? ::RequestStore
+        it { is_expected.to be_an_instance_of OperatorRecordable::RequestStore }
+      else
+        it { expect { subject }.to raise_error KeyError }
+      end
     end
 
     context "when store is :current_attributes_store" do
