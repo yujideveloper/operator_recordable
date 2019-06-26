@@ -3,9 +3,9 @@ sudo: false
 language: ruby
 cache: bundler
 rvm:
-  - 2.4.5
+  - 2.4.6
   - 2.5.5
-  - 2.6.2
+  - 2.6.3
 gemfile:
   - gemfiles/activerecord_5.0.gemfile
   - gemfiles/activerecord_5.0_with_request_store.gemfile
