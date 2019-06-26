@@ -2,7 +2,11 @@
 
 require "bundler/setup"
 require "active_record"
-require "request_store"
+begin
+  require "request_store"
+rescue LoadError
+  warn "it could not load request_store."
+end
 require "operator_recordable"
 
 RSpec.configure do |config|
