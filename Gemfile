@@ -9,3 +9,4 @@ gemspec
 
 gem "activerecord", ENV.fetch("AR_VERSION", "~> 5.2.3")
 gem "request_store" unless ENV["WITHOUT_REQUEST_STORE"]
+gem "sqlite3", ENV.fetch("SQLITE3_VERSION", ">= 1.3.13")

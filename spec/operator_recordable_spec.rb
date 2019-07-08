@@ -5,7 +5,6 @@ require "spec_helper"
 ActiveRecord::Base.configurations = {
   "test" => { "adapter" => "sqlite3", "database" => ":memory:" }
 }
-puts ActiveRecord::Base.configurations
 ActiveRecord::Base.establish_connection :test
 
 class CreateAllTables < ActiveRecord::Migration::Current
