@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Cbanges
+
+* Support ActiveRecord 6.0.0.rc1
+
 ### Misc
 
 * Improve rspec and CI
