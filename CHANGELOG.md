@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 0.4.0 (2019-08-22)
+
 ### Cbanges
 
 * Support ActiveRecord 6.0.0
