@@ -2,7 +2,7 @@
 
 ### Cbanges
 
-* Support ActiveRecord 6.0.0.rc1
+* Support ActiveRecord 6.0.0
 
 ### Misc
 
