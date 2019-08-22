@@ -24,6 +24,3 @@ matrix:
       gemfile: gemfiles/activerecord_6.0_with_request_store.gemfile
   allow_failures:
     rvm: 2.7.0-preview1
-    gemfile:
-      - gemfiles/activerecord_6.0.gemfile
-      - gemfiles/activerecord_6.0_with_request_store.gemfile
