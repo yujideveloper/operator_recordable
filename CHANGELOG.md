@@ -3,7 +3,7 @@
 
 ## 0.4.0 (2019-08-22)
 
-### Cbanges
+### Changes
 
 * Support ActiveRecord 6.0.0
 
@@ -21,7 +21,7 @@
 
 ## 0.2.0 (2018-09-27)
 
-### Cbanges
+### Changes
 
 * Add association name options
 * Modify not to define unnecessary class methods for ActiveRecord model
