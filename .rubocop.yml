@@ -18,6 +18,9 @@ Layout/EndOfLine:
   Enabled: true
   EnforcedStyle: lf
 
+Layout/LineLength:
+  Max: 128
+
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
@@ -25,6 +28,3 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Exclude:
     - spec/**/*
-
-Metrics/LineLength:
-  Max: 128
