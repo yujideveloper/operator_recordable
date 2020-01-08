@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Changes
+
+* Support Ruby 2.7
+
 
 ## 0.4.0 (2019-08-22)
 
