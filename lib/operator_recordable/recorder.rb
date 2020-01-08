@@ -51,8 +51,8 @@ module OperatorRecordable
     def run_add_association_dsl(type, klass, config)
       klass.belongs_to config.association_name_for(type).to_sym,
                        config.operator_association_scope,
-                       { foreign_key: config.column_name_for(type),
-                         class_name: config.operator_class_name }.merge(config.operator_association_options)
+                       **{ foreign_key: config.column_name_for(type),
+                           class_name: config.operator_class_name }.merge(config.operator_association_options)
     end
 
     def define_creator_instance_methods(klass, config)
