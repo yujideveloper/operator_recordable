@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 1.0.0 (2020-10-16)
+
 ### Changes
 
 * Support Ruby 2.7
