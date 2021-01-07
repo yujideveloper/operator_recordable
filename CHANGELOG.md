@@ -3,6 +3,7 @@
 ### Misc
 
 * Introduce Appraisal
+* CI against for ActiveRecord 6.1
 
 
 ## 1.0.0 (2020-10-16)

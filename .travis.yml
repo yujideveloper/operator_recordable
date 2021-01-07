@@ -16,12 +16,18 @@ gemfile:
   - gemfiles/activerecord_5.2_with_request_store.gemfile
   - gemfiles/activerecord_6.0.gemfile
   - gemfiles/activerecord_6.0_with_request_store.gemfile
+  - gemfiles/activerecord_6.1.gemfile
+  - gemfiles/activerecord_6.1_with_request_store.gemfile
 matrix:
   exclude:
     - rvm: 2.4
       gemfile: gemfiles/activerecord_6.0.gemfile
     - rvm: 2.4
       gemfile: gemfiles/activerecord_6.0_with_request_store.gemfile
+    - rvm: 2.4
+      gemfile: gemfiles/activerecord_6.1.gemfile
+    - rvm: 2.4
+      gemfile: gemfiles/activerecord_6.1_with_request_store.gemfile
   allow_failures:
     - rvm: 2.7
       gemfile: gemfiles/activerecord_5.0.gemfile
