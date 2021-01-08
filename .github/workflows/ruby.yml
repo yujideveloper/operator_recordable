@@ -1,0 +1,99 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: ['2.4', '2.5', '2.6', '2.7']
+        activerecord: ['5.0', '5.1', '5.2', '6.0', '6.1']
+        plugin: ['', '_with_request_store']
+        experimental: [false]
+        exclude:
+        - ruby: '2.4'
+          activerecord: '6.0'
+          plugin: ''
+        - ruby: '2.4'
+          activerecord: '6.0'
+          plugin: '_with_request_store'
+          experimental: false
+        - ruby: '2.4'
+          activerecord: '6.1'
+          plugin: ''
+          experimental: false
+        - ruby: '2.4'
+          activerecord: '6.1'
+          plugin: '_with_request_store'
+          experimental: false
+        - ruby: '2.7'
+          activerecord: '5.0'
+          plugin: ''
+        - ruby: '2.7'
+          activerecord: '5.0'
+          plugin: '_with_request_store'
+          experimental: false
+        - ruby: '2.7'
+          activerecord: '5.1'
+          plugin: ''
+          experimental: false
+        - ruby: '2.7'
+          activerecord: '5.1'
+          plugin: '_with_request_store'
+          experimental: false
+        - ruby: '2.7'
+          activerecord: '5.2'
+          plugin: ''
+          experimental: false
+        - ruby: '2.7'
+          activerecord: '5.2'
+          plugin: '_with_request_store'
+          experimental: false
+        include:
+        - ruby: '2.7'
+          activerecord: '5.0'
+          plugin: ''
+          experimental: true
+        - ruby: '2.7'
+          activerecord: '5.0'
+          plugin: '_with_request_store'
+          experimental: true
+        - ruby: '2.7'
+          activerecord: '5.1'
+          plugin: ''
+          experimental: true
+        - ruby: '2.7'
+          activerecord: '5.1'
+          plugin: '_with_request_store'
+          experimental: true
+        - ruby: '2.7'
+          activerecord: '5.2'
+          plugin: ''
+          experimental: true
+        - ruby: '2.7'
+          activerecord: '5.2'
+          plugin: '_with_request_store'
+          experimental: true
+    continue-on-error: ${{ matrix.experimental }}
+    env:
+      APPRAISAL: activerecord_${{ matrix.activerecord }}${{ matrix.plugin }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Install dependencies
+      run: |
+        bundle install
+        bundle exec appraisal $APPRAISAL bundle install
+    - name: Run tests
+      run: bundle exec appraisal $APPRAISAL rake

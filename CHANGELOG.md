@@ -4,6 +4,7 @@
 
 * Introduce Appraisal
 * CI against for ActiveRecord 6.1
+* Use GitHub Actions and stop using Travis CI
 
 
 ## 1.0.0 (2020-10-16)
