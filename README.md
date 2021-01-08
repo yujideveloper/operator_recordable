@@ -1,7 +1,7 @@
 # OperatorRecordable
 
 [![Gem Version](https://badge.fury.io/rb/operator_recordable.svg)](https://badge.fury.io/rb/operator_recordable)
-[![Build Status](https://travis-ci.org/yujideveloper/operator_recordable.svg?branch=master)](https://travis-ci.org/yujideveloper/operator_recordable)
+[![Build](https://github.com/yujideveloper/operator_recordable/workflows/Build/badge.svg)](https://github.com/yujideveloper/operator_recordable/actions?query=workflow%3ABuild)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aaa0fcd567da9232a847/maintainability)](https://codeclimate.com/github/yujideveloper/operator_recordable/maintainability)
 
 OperatorRecordable is a Rails plugin gem that makes your ActiveRecord models to be saved or logically deleted with automatically set `created_by`, `updated_by`, and `deleted_by`.
