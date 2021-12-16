@@ -3,7 +3,7 @@
 ### Misc
 
 * Introduce Appraisal
-* CI against for ActiveRecord 6.1
+* CI against for ActiveRecord 6.1 and 7.0
 * Use GitHub Actions and stop using Travis CI
 
 
