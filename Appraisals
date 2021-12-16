@@ -52,3 +52,14 @@ appraise "activerecord_6.1_with_request_store" do
   gem "request_store"
   gem "sqlite3", "~> 1.4"
 end
+
+appraise "activerecord_7.0" do
+  gem "activerecord", "~> 7.0.0"
+  gem "sqlite3", "~> 1.4"
+end
+
+appraise "activerecord_7.0_with_request_store" do
+  gem "activerecord", "~> 7.0.0"
+  gem "request_store"
+  gem "sqlite3", "~> 1.4"
+end
