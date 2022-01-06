@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Changes
+
+* Add gem metadata
+
 ### Misc
 
 * Introduce Appraisal
