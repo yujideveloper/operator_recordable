@@ -11,7 +11,7 @@
 * Introduce Appraisal
 * CI against for ActiveRecord 6.1 and 7.0
 * Use GitHub Actions and stop using Travis CI
-* CI against for Ruby 3.0
+* CI against for Ruby 3.0 and 3.1
 * Require MFA to release gem
 
 

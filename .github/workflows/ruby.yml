@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: ['2.5', '2.6', '2.7', '3.0']
+        ruby: ['2.5', '2.6', '2.7', '3.0', '3.1']
         activerecord: ['5.2', '6.0', '6.1', '7.0']
         plugin: ['', '_with_request_store']
         experimental: [false]
@@ -49,6 +49,23 @@ jobs:
           experimental: false
         - ruby: '3.0'
           activerecord: '5.2'
+          plugin: '_with_request_store'
+          experimental: false
+        - ruby: '3.1'
+          activerecord: '5.2'
+          plugin: ''
+          experimental: false
+        - ruby: '3.1'
+          activerecord: '5.2'
+          plugin: '_with_request_store'
+          experimental: false
+        # Rails 7.0.1 will start supporting Ruby 3.1, but Rails 7.0.1 has not been released yet
+        - ruby: '3.1'
+          activerecord: '7.0'
+          plugin: ''
+          experimental: false
+        - ruby: '3.1'
+          activerecord: '7.0'
           plugin: '_with_request_store'
           experimental: false
         include:
