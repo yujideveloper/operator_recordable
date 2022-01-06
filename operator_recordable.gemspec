@@ -30,6 +30,8 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.metadata["source_code_uri"]   = spec.homepage
   spec.metadata["changelog_uri"]     = "https://github.com/yujideveloper/operator_recordable/tree/master/CHANGELOG.md"
 
+  spec.metadata["rubygems_mfa_required"] = "true"
+
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files         = Dir.chdir(__dir__) do
