@@ -14,34 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: ['2.4', '2.5', '2.6', '2.7', '3.0']
-        activerecord: ['5.0', '5.1', '5.2', '6.0', '6.1', '7.0']
+        ruby: ['2.5', '2.6', '2.7', '3.0']
+        activerecord: ['5.2', '6.0', '6.1', '7.0']
         plugin: ['', '_with_request_store']
         experimental: [false]
         exclude:
-        - ruby: '2.4'
-          activerecord: '6.0'
-          plugin: ''
-        - ruby: '2.4'
-          activerecord: '6.0'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '2.4'
-          activerecord: '6.1'
-          plugin: ''
-          experimental: false
-        - ruby: '2.4'
-          activerecord: '6.1'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '2.4'
-          activerecord: '7.0'
-          plugin: ''
-          experimental: false
-        - ruby: '2.4'
-          activerecord: '7.0'
-          plugin: '_with_request_store'
-          experimental: false
         - ruby: '2.5'
           activerecord: '7.0'
           plugin: ''
@@ -59,41 +36,11 @@ jobs:
           plugin: '_with_request_store'
           experimental: false
         - ruby: '2.7'
-          activerecord: '5.0'
-          plugin: ''
-        - ruby: '2.7'
-          activerecord: '5.0'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '2.7'
-          activerecord: '5.1'
-          plugin: ''
-          experimental: false
-        - ruby: '2.7'
-          activerecord: '5.1'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '2.7'
           activerecord: '5.2'
           plugin: ''
           experimental: false
         - ruby: '2.7'
           activerecord: '5.2'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '3.0'
-          activerecord: '5.0'
-          plugin: ''
-        - ruby: '3.0'
-          activerecord: '5.0'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '3.0'
-          activerecord: '5.1'
-          plugin: ''
-          experimental: false
-        - ruby: '3.0'
-          activerecord: '5.1'
           plugin: '_with_request_store'
           experimental: false
         - ruby: '3.0'
@@ -105,22 +52,6 @@ jobs:
           plugin: '_with_request_store'
           experimental: false
         include:
-        - ruby: '2.7'
-          activerecord: '5.0'
-          plugin: ''
-          experimental: true
-        - ruby: '2.7'
-          activerecord: '5.0'
-          plugin: '_with_request_store'
-          experimental: true
-        - ruby: '2.7'
-          activerecord: '5.1'
-          plugin: ''
-          experimental: true
-        - ruby: '2.7'
-          activerecord: '5.1'
-          plugin: '_with_request_store'
-          experimental: true
         - ruby: '2.7'
           activerecord: '5.2'
           plugin: ''

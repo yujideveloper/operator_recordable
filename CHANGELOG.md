@@ -3,6 +3,8 @@
 ### Changes
 
 * Add gem metadata
+* Drop Ruby 2.4 support
+* Drop ActiveRecord 5.0 and 5.1 support
 
 ### Misc
 
