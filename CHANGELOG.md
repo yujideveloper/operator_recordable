@@ -1,11 +1,16 @@
 ## Unreleased
 
+### Changes
+
+* Add gem metadata
+
 ### Misc
 
 * Introduce Appraisal
 * CI against for ActiveRecord 6.1 and 7.0
 * Use GitHub Actions and stop using Travis CI
 * CI against for Ruby 3.0
+* Require MFA to release gem
 
 
 ## 1.0.0 (2020-10-16)
