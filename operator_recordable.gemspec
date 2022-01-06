@@ -41,7 +41,9 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "activerecord", ">= 5.0"
+  spec.required_ruby_version = ">= 2.5"
+
+  spec.add_dependency "activerecord", ">= 5.2"
   spec.add_development_dependency "appraisal", ">= 2.3.0"
   spec.add_development_dependency "bundler", ">= 1.16"
   spec.add_development_dependency "pry", ">= 0.10.0"

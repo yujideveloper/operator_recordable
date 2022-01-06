@@ -3,13 +3,15 @@
 ### Changes
 
 * Add gem metadata
+* Drop Ruby 2.4 support
+* Drop ActiveRecord 5.0 and 5.1 support
 
 ### Misc
 
 * Introduce Appraisal
 * CI against for ActiveRecord 6.1 and 7.0
 * Use GitHub Actions and stop using Travis CI
-* CI against for Ruby 3.0
+* CI against for Ruby 3.0 and 3.1
 * Require MFA to release gem
 
 
