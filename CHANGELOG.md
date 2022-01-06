@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 1.1.0 (2022-01-07)
+
 ### Changes
 
 * Add gem metadata
