@@ -1,5 +1,10 @@
 ## Unreleased
 
+### Misc
+
+* CI against for Rails 7.0 running on Ruby 3.1
+
+
 ## 1.1.0 (2022-01-07)
 
 ### Changes
