@@ -19,7 +19,7 @@ gem 'operator_recordable'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
@@ -99,7 +99,7 @@ This is default store.
 This store is implemented by using [RequestStore gem](https://github.com/steveklabnik/request_store).  
 So, this requires RequestStore gem.
 
-RequestStore must be required before OperatorRecordable.
+RequestStore must be loaded before OperatorRecordable.
 
 ``` ruby
 gem "request_store"
@@ -112,7 +112,7 @@ require "request_store"
 require "operator_recordable"
 ```
 
-Otherwise, you need to require it yourself.
+Otherwise, you need to load it yourself.
 ``` ruby
 require "operator_recordable/store/request_store"
 ```
