@@ -52,7 +52,8 @@ module OperatorRecordable
       klass.belongs_to config.association_name_for(type).to_sym,
                        config.operator_association_scope,
                        **{ foreign_key: config.column_name_for(type),
-                           class_name: config.operator_class_name }.merge(config.operator_association_options)
+                           class_name: config.operator_class_name,
+                           optional: true }.merge(config.operator_association_options)
     end
 
     def define_creator_instance_methods(klass, config)
