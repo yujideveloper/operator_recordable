@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Changes
+
+* Make associations optional
+
 ### Misc
 
 * CI against for Rails 7.0 running on Ruby 3.1
