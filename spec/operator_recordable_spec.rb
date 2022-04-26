@@ -6,6 +6,7 @@ ActiveRecord::Base.configurations = {
   "test" => { "adapter" => "sqlite3", "database" => ":memory:" }
 }
 ActiveRecord::Base.establish_connection :test
+ActiveRecord::Base.belongs_to_required_by_default = true # default for Rails 5.0+
 
 class CreateAllTables < ActiveRecord::Migration::Current
   def self.up
