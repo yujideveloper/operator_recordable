@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 1.2.0 (2022-04-26)
+
 ### Changes
 
 * Make associations optional
