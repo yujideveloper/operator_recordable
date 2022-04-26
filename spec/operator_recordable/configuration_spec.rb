@@ -161,9 +161,9 @@ RSpec.describe OperatorRecordable::Configuration do
     end
 
     context "when operator_association_options is specified" do
-      let(:config) { { operator_association_options: { optional: true } } }
+      let(:config) { { operator_association_options: { touch: true } } }
 
-      it { is_expected.to match optional: true }
+      it { is_expected.to match touch: true }
     end
   end
 
