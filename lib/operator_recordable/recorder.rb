@@ -5,6 +5,7 @@ require "operator_recordable/configuration"
 module OperatorRecordable
   class Recorder < ::Module
     def initialize(config)
+      super()
       define_activate_method(config)
     end
 
