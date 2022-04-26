@@ -9,6 +9,8 @@
 
 * CI against for Rails 7.0 running on Ruby 3.1
   + [PR#26](https://github.com/yujideveloper/operator_recordable/pull/26)
+* Call `super` in `OperatorRecordable::Recorder#initialize`
+  + [PR#30](https://github.com/yujideveloper/operator_recordable/pull/30)
 
 
 ## 1.1.0 (2022-01-07)
