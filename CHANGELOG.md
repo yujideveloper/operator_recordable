@@ -6,7 +6,7 @@
 ### Changes
 
 * Make associations optional
-  + [PR#28](https://github.com/yujideveloper/operator_recordable/pull/25)
+  + [PR#28](https://github.com/yujideveloper/operator_recordable/pull/28)
 
 ### Misc
 
