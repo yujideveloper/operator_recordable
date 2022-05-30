@@ -51,4 +51,5 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_development_dependency "rspec", "~> 3.7"
   spec.add_development_dependency "rubocop", ">= 0.78.0"
   spec.add_development_dependency "sqlite3", ">= 1.3.13"
+  spec.add_development_dependency "discard", ">= 1.2"
 end

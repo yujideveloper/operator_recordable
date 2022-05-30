@@ -31,6 +31,11 @@ module OperatorRecordable
           m.__send__(:run_deleter_dsl, self, config)
           m.__send__(:define_deleter_instance_methods, self, config)
         end
+
+        if c.record_discarder?
+          m.__send__(:run_discarder_dsl, self, config)
+          m.__send__(:define_discarder_instance_methods, self, config)
+        end
       end
     end
 
@@ -47,6 +52,11 @@ module OperatorRecordable
     def run_deleter_dsl(klass, config)
       klass.before_destroy :"assign_#{config.deleter_association_name}"
       run_add_association_dsl(:deleter, klass, config)
+    end
+
+    def run_discarder_dsl(klass, config)
+      klass.before_discard :"assign_#{config.discarder_association_name}"
+      run_add_association_dsl(:discarder, klass, config)
     end
 
     def run_add_association_dsl(type, klass, config)
@@ -89,6 +99,21 @@ module OperatorRecordable
             .where(self.class.primary_key => id)
             .update_all('#{config.deleter_column_name}' => op.id)
           self.#{config.deleter_column_name} = op.id
+        end
+      END_OF_DEF
+    end
+
+    def define_discarder_instance_methods(klass, config)
+      klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
+        private def assign_#{config.discarder_association_name}
+          return if self.frozen?
+          return unless (op = OperatorRecordable.operator)
+
+          self
+            .class
+            .where(self.class.primary_key => id)
+            .update_all('#{config.discarder_column_name}' => op.id)
+          self.#{config.discarder_column_name} = op.id
         end
       END_OF_DEF
     end
