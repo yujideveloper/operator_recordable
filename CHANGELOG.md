@@ -1,5 +1,10 @@
 ## Unreleased
 
+### Changes
+
+* Support discard gem for soft deletes
+  + https://github.com/yujideveloper/operator_recordable/pull/31
+
 
 ## 1.2.0 (2022-04-26)
 
