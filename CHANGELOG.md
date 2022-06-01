@@ -4,6 +4,8 @@
 
 * Support discard gem for soft deletes
   + https://github.com/yujideveloper/operator_recordable/pull/31
+* Get rid of needless guard clauses for ActiveSupport 5.1 and older
+  + https://github.com/yujideveloper/operator_recordable/pull/32
 
 
 ## 1.2.0 (2022-04-26)

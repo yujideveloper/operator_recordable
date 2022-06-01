@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-return unless defined? ::ActiveSupport::CurrentAttributes
-
 require "spec_helper"
 
 RSpec.describe OperatorRecordable::CurrentAttributesStore do
