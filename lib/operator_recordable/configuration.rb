@@ -11,8 +11,8 @@ module OperatorRecordable
       @store = initialize_store
     end
 
-    %i[operator_class_name creator_column_name updater_column_name deleter_column_name
-       creator_association_name updater_association_name deleter_association_name
+    %i[operator_class_name creator_column_name updater_column_name deleter_column_name discarder_column_name
+       creator_association_name updater_association_name deleter_association_name discarder_association_name
        operator_association_options operator_association_scope].each do |name|
       define_method name do
         config[name]
@@ -37,9 +37,11 @@ module OperatorRecordable
         creator_column_name: "created_by",
         updater_column_name: "updated_by",
         deleter_column_name: "deleted_by",
+        discarder_column_name: "discarded_by",
         creator_association_name: "creator",
         updater_association_name: "updater",
         deleter_association_name: "deleter",
+        discarder_association_name: "discarder",
         operator_association_options: {},
         operator_association_scope: nil,
         store: :thread_store
@@ -53,7 +55,7 @@ module OperatorRecordable
     end
 
     class Model
-      VALID_ACTIONS = %i[create update destroy].freeze
+      VALID_ACTIONS = %i[create update destroy discard].freeze
 
       def initialize(actions)
         @actions = actions
@@ -70,6 +72,10 @@ module OperatorRecordable
 
       def record_deleter?
         actions.include? :destroy
+      end
+
+      def record_discarder?
+        actions.include? :discard
       end
 
       private

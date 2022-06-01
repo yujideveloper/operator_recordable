@@ -103,6 +103,22 @@ RSpec.describe OperatorRecordable::Configuration do
     end
   end
 
+  describe "#discarder_column_name" do
+    subject { described_class.new(config).discarder_column_name }
+
+    context "when discarder_column_name is not specified" do
+      let(:config) { {} }
+
+      it { is_expected.to eq "discarded_by" }
+    end
+
+    context "when discarder_column_name is specified" do
+      let(:config) { { discarder_column_name: "discarded_operator_id" } }
+
+      it { is_expected.to eq "discarded_operator_id" }
+    end
+  end
+
   describe "#creator_association_name" do
     subject { described_class.new(config).creator_association_name }
 
@@ -148,6 +164,22 @@ RSpec.describe OperatorRecordable::Configuration do
       let(:config) { { deleter_association_name: "deleter_operator" } }
 
       it { is_expected.to eq "deleter_operator" }
+    end
+  end
+
+  describe "#discarder_association_name" do
+    subject { described_class.new(config).discarder_association_name }
+
+    context "when discarder_association_name is not specified" do
+      let(:config) { {} }
+
+      it { is_expected.to eq "discarder" }
+    end
+
+    context "when discarder_association_name is specified" do
+      let(:config) { { discarder_association_name: "discarded_operator" } }
+
+      it { is_expected.to eq "discarded_operator" }
     end
   end
 
@@ -207,6 +239,12 @@ RSpec.describe OperatorRecordable::Configuration do
 
         it { is_expected.to eq "deleted_by" }
       end
+
+      context "when :discarder is passed" do
+        let(:type) { :discarder }
+
+        it { is_expected.to eq "discarded_by" }
+      end
     end
 
     context "when association names are specified" do
@@ -214,7 +252,8 @@ RSpec.describe OperatorRecordable::Configuration do
         {
           creator_column_name: "creator_operator_id",
           updater_column_name: "updater_operator_id",
-          deleter_column_name: "deleter_operator_id"
+          deleter_column_name: "deleter_operator_id",
+          discarder_column_name: "discarder_operator_id"
         }
       end
 
@@ -234,6 +273,12 @@ RSpec.describe OperatorRecordable::Configuration do
         let(:type) { :deleter }
 
         it { is_expected.to eq "deleter_operator_id" }
+      end
+
+      context "when :discarder is passed" do
+        let(:type) { :discarder }
+
+        it { is_expected.to eq "discarder_operator_id" }
       end
     end
   end
@@ -261,6 +306,12 @@ RSpec.describe OperatorRecordable::Configuration do
 
         it { is_expected.to eq "deleter" }
       end
+
+      context "when :discarder is passed" do
+        let(:type) { :discarder }
+
+        it { is_expected.to eq "discarder" }
+      end
     end
 
     context "when column names are specified" do
@@ -268,7 +319,8 @@ RSpec.describe OperatorRecordable::Configuration do
         {
           creator_association_name: "creator_operator",
           updater_association_name: "updater_operator",
-          deleter_association_name: "deleter_operator"
+          deleter_association_name: "deleter_operator",
+          discarder_association_name: "discarder_operator"
         }
       end
 
@@ -288,6 +340,12 @@ RSpec.describe OperatorRecordable::Configuration do
         let(:type) { :deleter }
 
         it { is_expected.to eq "deleter_operator" }
+      end
+
+      context "when :discarder is passed" do
+        let(:type) { :discarder }
+
+        it { is_expected.to eq "discarder_operator" }
       end
     end
   end

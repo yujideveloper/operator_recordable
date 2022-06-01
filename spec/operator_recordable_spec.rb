@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "discard"
 
 ActiveRecord::Base.configurations = {
   "test" => { "adapter" => "sqlite3", "database" => ":memory:" }
@@ -22,6 +23,16 @@ class CreateAllTables < ActiveRecord::Migration::Current
       t.integer :updated_by
       t.datetime :deleted_at
       t.integer :deleted_by
+    end
+    create_table(:posts) do |t|
+      t.string :title
+      t.string :body
+      t.datetime :created_at
+      t.integer :created_by
+      t.datetime :updated_at
+      t.integer :updated_by
+      t.datetime :discarded_at
+      t.integer :discarded_by
     end
   end
 end
@@ -57,6 +68,12 @@ class Account < ApplicationRecord
   include SoftDeletable
 
   record_operator_on :create, :update, :destroy
+end
+
+class Post < ApplicationRecord
+  include Discard::Model
+
+  record_operator_on :create, :update, :discard
 end
 
 RSpec.describe OperatorRecordable do
@@ -119,6 +136,29 @@ RSpec.describe OperatorRecordable do
       account.reload
       expect(account.deleted_by).to eq operator2.id
       expect(account.deleter).to eq operator2
+    end
+  end
+
+  describe "discarder" do
+    after do
+      Post.delete_all
+      Operator.delete_all
+    end
+
+    it "should be assigned discarder" do
+      operator1 = Operator.create!(name: "op1")
+      OperatorRecordable.operator = operator1
+      post = Post.create!
+      expect(post.updated_by).to eq operator1.id
+      expect(post.updater).to eq operator1
+      operator2 = Operator.create!(name: "op2")
+      OperatorRecordable.operator = operator2
+      post.discard!
+      expect(post.discarded_by).to eq operator2.id
+      expect(post.discarder).to eq operator2
+      post.reload
+      expect(post.discarded_by).to eq operator2.id
+      expect(post.discarder).to eq operator2
     end
   end
 end
