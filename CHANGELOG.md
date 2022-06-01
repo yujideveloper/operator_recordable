@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 1.3.0 (2022-06-01)
+
 ### Changes
 
 * Support discard gem for soft deletes
