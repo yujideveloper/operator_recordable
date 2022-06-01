@@ -69,52 +69,52 @@ module OperatorRecordable
 
     def define_creator_instance_methods(klass, config)
       klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
-        private def assign_#{config.creator_association_name}
-          return unless (op = OperatorRecordable.operator)
-
-          self.#{config.creator_column_name} = op.id
-        end
+        private def assign_#{config.creator_association_name}  # private def assign_creator
+          return unless (op = OperatorRecordable.operator)     #   return unless (op = OperatorRecordable.operator)
+                                                               #
+          self.#{config.creator_column_name} = op.id           #   self.created_by = op.id
+        end                                                    # end
       END_OF_DEF
     end
 
     def define_updater_instance_methods(klass, config)
       klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
-        private def assign_#{config.updater_association_name}
-          return if !self.new_record? && !self.changed?
-          return unless (op = OperatorRecordable.operator)
-
-          self.#{config.updater_column_name} = op.id
-        end
+        private def assign_#{config.updater_association_name}  # private def assign_updater
+          return if !self.new_record? && !self.changed?        #   return if !self.new_record? && !self.changed?
+          return unless (op = OperatorRecordable.operator)     #   return unless (op = OperatorRecordable.operator)
+                                                               #
+          self.#{config.updater_column_name} = op.id           #   self.updated_by = op.id
+        end                                                    # end
       END_OF_DEF
     end
 
     def define_deleter_instance_methods(klass, config)
       klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
-        private def assign_#{config.deleter_association_name}
-          return if self.frozen?
-          return unless (op = OperatorRecordable.operator)
-
-          self
-            .class
-            .where(self.class.primary_key => id)
-            .update_all('#{config.deleter_column_name}' => op.id)
-          self.#{config.deleter_column_name} = op.id
-        end
+        private def assign_#{config.deleter_association_name}      # private def assign_deleter
+          return if self.frozen?                                   #   return if self.frozen?
+          return unless (op = OperatorRecordable.operator)         #   return unless (op = OperatorRecordable.operator)
+                                                                   #
+          self                                                     #   self
+            .class                                                 #     .class
+            .where(self.class.primary_key => id)                   #     .where(self.class.primary_key => id)
+            .update_all('#{config.deleter_column_name}' => op.id)  #     .update_all('deleted_by' => op.id)
+          self.#{config.deleter_column_name} = op.id               #   self.deleted_by = op.id
+        end                                                        # end
       END_OF_DEF
     end
 
     def define_discarder_instance_methods(klass, config)
       klass.class_eval <<~END_OF_DEF, __FILE__, __LINE__ + 1
-        private def assign_#{config.discarder_association_name}
-          return if self.frozen?
-          return unless (op = OperatorRecordable.operator)
-
-          self
-            .class
-            .where(self.class.primary_key => id)
-            .update_all('#{config.discarder_column_name}' => op.id)
-          self.#{config.discarder_column_name} = op.id
-        end
+        private def assign_#{config.discarder_association_name}      # private def assign_discarder
+          return if self.frozen?                                     #   return if self.frozen?
+          return unless (op = OperatorRecordable.operator)           #   return unless (op = OperatorRecordable.operator)
+                                                                     #
+          self                                                       #   self
+            .class                                                   #     .class
+            .where(self.class.primary_key => id)                     #     .where(self.class.primary_key => id)
+            .update_all('#{config.discarder_column_name}' => op.id)  #     .update_all('discarded_by' => op.id)
+          self.#{config.discarder_column_name} = op.id               #   self.discarded_by = op.id
+        end                                                          # end
       END_OF_DEF
     end
   end

@@ -7,6 +7,11 @@
 * Get rid of needless guard clauses for ActiveSupport 5.1 and older
   + https://github.com/yujideveloper/operator_recordable/pull/32
 
+### Misc
+
+* Fix RuboCop offenses
+  + https://github.com/yujideveloper/operator_recordable/pull/33
+
 
 ## 1.2.0 (2022-04-26)
 

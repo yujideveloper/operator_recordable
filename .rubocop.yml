@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - gemfiles/**/*
   TargetRubyVersion: 2.5
+  NewCops: enable
 
 Style/AsciiComments:
   Enabled: false
@@ -22,6 +23,10 @@ Layout/EndOfLine:
 
 Layout/LineLength:
   Max: 128
+
+Metrics/AbcSize:
+  Exclude:
+    - spec/**/*
 
 Metrics/BlockLength:
   Exclude:
