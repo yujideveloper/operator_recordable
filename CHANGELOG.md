@@ -1,5 +1,10 @@
 ## Unreleased
 
+### Bug fixes
+
+* Fix recording discarded_by if the target table uses optimistic lock
+  + [PR#34](https://github.com/yujideveloper/operator_recordable/pull/34)
+
 
 ## 1.3.0 (2022-06-01)
 
