@@ -109,10 +109,6 @@ module OperatorRecordable
           return if self.frozen?                                     #   return if self.frozen?
           return unless (op = OperatorRecordable.operator)           #   return unless (op = OperatorRecordable.operator)
                                                                      #
-          self                                                       #   self
-            .class                                                   #     .class
-            .where(self.class.primary_key => id)                     #     .where(self.class.primary_key => id)
-            .update_all('#{config.discarder_column_name}' => op.id)  #     .update_all('discarded_by' => op.id)
           self.#{config.discarder_column_name} = op.id               #   self.discarded_by = op.id
         end                                                          # end
       END_OF_DEF

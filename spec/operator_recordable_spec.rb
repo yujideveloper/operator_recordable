@@ -27,6 +27,7 @@ class CreateAllTables < ActiveRecord::Migration::Current
     create_table(:posts) do |t|
       t.string :title
       t.string :body
+      t.integer :lock_version
       t.datetime :created_at
       t.integer :created_by
       t.datetime :updated_at
