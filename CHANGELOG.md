@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 1.3.1 (2022-06-20)
+
 ### Bug fixes
 
 * Fix recording discarded_by if the target table uses optimistic lock
