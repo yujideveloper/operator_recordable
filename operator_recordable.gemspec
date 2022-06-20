@@ -28,7 +28,7 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
 
   spec.metadata["homepage_uri"]      = spec.homepage
   spec.metadata["source_code_uri"]   = spec.homepage
-  spec.metadata["changelog_uri"]     = "https://github.com/yujideveloper/operator_recordable/tree/master/CHANGELOG.md"
+  spec.metadata["changelog_uri"]     = "https://github.com/yujideveloper/operator_recordable/tree/main/CHANGELOG.md"
 
   spec.metadata["rubygems_mfa_required"] = "true"
 

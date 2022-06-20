@@ -1,5 +1,10 @@
 ## Unreleased
 
+### Misc
+
+* Change the default branch from master to main
+  + [PR#35](https://github.com/yujideveloper/operator_recordable/pull/35)
+
 
 ## 1.3.1 (2022-06-20)
 
