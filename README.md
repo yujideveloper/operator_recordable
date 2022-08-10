@@ -47,7 +47,7 @@ OperatorRecordable.config = {
   discarder_association_name: "discarder",
   operator_association_options: {},
   operator_association_scope: nil,
-  store: :thread_store
+  store: :current_attributes_store
 }
 ```
 
@@ -97,7 +97,7 @@ OperatorRecordable.operator = current_operator
 #### `:thread_store`
 
 This store is implemented by `Thread.current`.  
-This is default store.
+This is default store. **But this is deprecated and will be removed in v2.0. Please consider using `:current_attributes_store` instead.**
 
 
 #### `:request_store`
