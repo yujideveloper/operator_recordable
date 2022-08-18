@@ -3,6 +3,7 @@
 ### Changes
 
 * Deprecate `:thread_store`
+  + [PR#36](https://github.com/yujideveloper/operator_recordable/pull/36)
 
 ### Misc
 
