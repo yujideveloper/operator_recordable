@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 1.4.0 (2022-08-18)
+
 ### Changes
 
 * Deprecate `:thread_store`
