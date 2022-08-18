@@ -66,7 +66,7 @@ OperatorRecordable.config = {
 | `discarder_association_name` | String | association name of discarder. | `"discarder"` |
 | `operator_association_options` | Hash | options of operator associations. e.g. `{ touch: true }` | `{}` |
 | `operator_association_scope` | Proc | The scope of operator associations. e.g. `-> { with_deleted }`  | `nil` |
-| `store` | Enum | operator store. any value of `:thread_store`, `:request_store` or `:current_attributes_store` | `:thread_store` |
+| `store` | Enum | operator store. any value of `:current_attributes_store` or `:request_store` | `:current_attributes_store` |
 
 #### Include `OperatorRecordable` in your model
 
@@ -94,11 +94,10 @@ OperatorRecordable.operator = current_operator
 
 ### Stores
 
-#### `:thread_store`
+#### `:current_attributes_store`
 
-This store is implemented by `Thread.current`.  
-This is default store. **But this is deprecated and will be removed in v2.0. Please consider using `:current_attributes_store` instead.**
-
+This store is implemented by using [`ActiveSupport::CurrentAttributes`](https://api.rubyonrails.org/v5.2.0/classes/ActiveSupport/CurrentAttributes.html).  
+This is the default store.
 
 #### `:request_store`
 
@@ -122,11 +121,6 @@ Otherwise, you need to load it yourself.
 ``` ruby
 require "operator_recordable/store/request_store"
 ```
-
-#### `:current_attributes_store`
-
-This store is implemented by using [`ActiveSupport::CurrentAttributes`](https://api.rubyonrails.org/v5.2.0/classes/ActiveSupport/CurrentAttributes.html).
-
 
 ## Development
 

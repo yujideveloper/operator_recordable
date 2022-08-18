@@ -44,7 +44,7 @@ module OperatorRecordable
         discarder_association_name: "discarder",
         operator_association_options: {},
         operator_association_scope: nil,
-        store: :thread_store
+        store: :current_attributes_store
       }.merge!(config || {}).freeze
     end
 
