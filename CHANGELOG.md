@@ -9,6 +9,8 @@
 
 * Test with paranoia gem
   + [PR#38](https://github.com/yujideveloper/operator_recordable/pull/38)
+* Add code of conduct
+  + [PR#39](https://github.com/yujideveloper/operator_recordable/pull/39)
 
 
 ## 1.4.0 (2022-08-18)
