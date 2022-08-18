@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Changes
+
+* Deprecate `:thread_store`
+
 ### Misc
 
 * Change the default branch from master to main

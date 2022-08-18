@@ -2,6 +2,10 @@
 
 module OperatorRecordable
   class ThreadStore
+    def initialize
+      warn "DEPRECATION WARNING: `:thread_store` is deprecated. It will be removed in v2.0"
+    end
+
     def [](key)
       ::Thread.current[key]
     end
