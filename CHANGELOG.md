@@ -5,6 +5,11 @@
 * Remove `:thread_store` and change the default store to `:current_attributes_store`
   + [PR#37](https://github.com/yujideveloper/operator_recordable/pull/37)
 
+### Misc
+
+* Test with paranoia gem
+  + [PR#38](https://github.com/yujideveloper/operator_recordable/pull/38)
+
 
 ## 1.4.0 (2022-08-18)
 
