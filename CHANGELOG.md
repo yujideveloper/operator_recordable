@@ -11,6 +11,10 @@
   + [PR#38](https://github.com/yujideveloper/operator_recordable/pull/38)
 * Add code of conduct
   + [PR#39](https://github.com/yujideveloper/operator_recordable/pull/39)
+* Drop Ruby 2.5 and 2.6 support
+  + [PR#40](https://github.com/yujideveloper/operator_recordable/pull/40)
+* Drop ActiveRecord 5.2 support
+  + [PR#40](https://github.com/yujideveloper/operator_recordable/pull/40)
 
 
 ## 1.4.0 (2022-08-18)

@@ -14,60 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: ['2.5', '2.6', '2.7', '3.0', '3.1']
-        activerecord: ['5.2', '6.0', '6.1', '7.0']
+        ruby: ['2.7', '3.0', '3.1']
+        activerecord: ['6.0', '6.1', '7.0']
         plugin: ['', '_with_request_store']
         experimental: [false]
-        exclude:
-        - ruby: '2.5'
-          activerecord: '7.0'
-          plugin: ''
-          experimental: false
-        - ruby: '2.5'
-          activerecord: '7.0'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '2.6'
-          activerecord: '7.0'
-          plugin: ''
-          experimental: false
-        - ruby: '2.6'
-          activerecord: '7.0'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '2.7'
-          activerecord: '5.2'
-          plugin: ''
-          experimental: false
-        - ruby: '2.7'
-          activerecord: '5.2'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '3.0'
-          activerecord: '5.2'
-          plugin: ''
-          experimental: false
-        - ruby: '3.0'
-          activerecord: '5.2'
-          plugin: '_with_request_store'
-          experimental: false
-        - ruby: '3.1'
-          activerecord: '5.2'
-          plugin: ''
-          experimental: false
-        - ruby: '3.1'
-          activerecord: '5.2'
-          plugin: '_with_request_store'
-          experimental: false
-        include:
-        - ruby: '2.7'
-          activerecord: '5.2'
-          plugin: ''
-          experimental: true
-        - ruby: '2.7'
-          activerecord: '5.2'
-          plugin: '_with_request_store'
-          experimental: true
     continue-on-error: ${{ matrix.experimental }}
     env:
       APPRAISAL: activerecord_${{ matrix.activerecord }}${{ matrix.plugin }}
