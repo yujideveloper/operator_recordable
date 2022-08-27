@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 2.0.0 (2022-08-27)
+
 ### Breaking changes
 
 * Remove `:thread_store` and change the default store to `:current_attributes_store`
